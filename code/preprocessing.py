@@ -64,7 +64,7 @@ def apply_sentence_split(df, input_col='text', output_col='text'):
     
     return df_expanded
 
-def split_rows_by_word_count(df, n):
+def split_rows_by_word_count(df, num_words):
     """
     Split rows in DataFrame where word_count exceeds 'n' words into chunks of at most 'n' words.
     Keeps the same values for all other columns apart from chunk_id.
@@ -72,7 +72,7 @@ def split_rows_by_word_count(df, n):
     
     max_words = df['word_count'].max()
     
-    if max_words >= n:
+    if max_words >= num_words:
     
         new_rows = []  # Initialize an empty list to store the new rows
         drop_indices = []  # Initialize a list to store indices of rows to be dropped
@@ -80,10 +80,10 @@ def split_rows_by_word_count(df, n):
     
         # Iterate over the DataFrame
         for index, row in df.iterrows():
-            if row['word_count'] > n:
+            if row['word_count'] > num_words:
                 words = row['text'].split()  # Split the text into words
-                num_chunks = len(words) // n  # Calculate the number of chunks
-                if len(words) % n != 0:
+                num_chunks = len(words) // num_words  # Calculate the number of chunks
+                if len(words) % num_words != 0:
                     num_chunks += 1
                 
                 chunk_id = row['chunk_id']
@@ -91,8 +91,8 @@ def split_rows_by_word_count(df, n):
                     chunk_counter[chunk_id] = 1
                 
                 for i in range(num_chunks):
-                    start_idx = i * n
-                    end_idx = min((i + 1) * n, len(words))
+                    start_idx = i * num_words
+                    end_idx = min((i + 1) * num_words, len(words))
                     new_row = row.copy()  # Create a copy of the original row
                     new_row['text'] = ' '.join(words[start_idx:end_idx])  # Assign the chunked text
                     new_row['subchunk_id'] = chunk_counter[chunk_id]
@@ -127,9 +127,12 @@ def split_rows_by_word_count(df, n):
     return updated_df
 
 def main():
+
+    # Parse arguments from user
     parser = argparse.ArgumentParser(description='Preprocessing steps for paraphrasing using LLMs')
-    parser.add_argument('--file_path', type=str, help='Path to jsonl file')
-    parser.add_argument('--output_file_path', type=str, help='Output filepath')
+    parser.add_argument('--file_path', type=str, help='Path to jsonl file', required=True)
+    parser.add_argument('--output_file_path', type=str, help='Output filepath', required=True)
+    parser.add_argument('--num_words', type=int, default=200, help='The number of words allowed in each chunk.')
     args = parser.parse_args()
 
     print("Beginning Preprocessing")
@@ -137,7 +140,7 @@ def main():
     
     split_df = apply_sentence_split(df)
 
-    split_row_by_wc_data = split_rows_by_word_count(split_df, n=200)
+    split_row_by_wc_data = split_rows_by_word_count(split_df, num_words=args.num_words)
 
     read_and_write_docs.save_as_jsonl(split_row_by_wc_data, args.output_file_path)
 
