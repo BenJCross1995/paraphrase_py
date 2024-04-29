@@ -11,7 +11,7 @@ def read_jsonl_file(file_path):
     data = pd.DataFrame(data)
     return data
 
-def save_as_jsonl(data, file_path):
+def save_as_jsonl(data, output_file_path):
     with open(file_path, 'w') as file:
         for _, row in data.iterrows():
             json.dump(row.to_dict(), file)
