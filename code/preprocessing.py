@@ -128,8 +128,8 @@ def split_rows_by_word_count(df, n):
 
 def main():
     parser = argparse.ArgumentParser(description='Preprocessing steps for paraphrasing using LLMs')
-    parser.add_argument('file_path', type=str, help='Path to jsonl file')
-    parser.add_argument('output_file_path', type=str, help='Output filepath')
+    parser.add_argument('--file_path', type=str, help='Path to jsonl file')
+    parser.add_argument('--output_file_path', type=str, help='Output filepath')
     args = parser.parse_args()
 
     print("Beginning Preprocessing")

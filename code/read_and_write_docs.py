@@ -12,7 +12,7 @@ def read_jsonl_file(file_path):
     return data
 
 def save_as_jsonl(data, output_file_path):
-    with open(file_path, 'w') as file:
+    with open(output_file_path, 'w') as file:
         for _, row in data.iterrows():
             json.dump(row.to_dict(), file)
             file.write('\n')
