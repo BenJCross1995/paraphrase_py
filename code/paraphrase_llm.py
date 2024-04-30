@@ -11,7 +11,7 @@ from openai._client import OpenAI
 from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
 
 # Initialise OpenAI and create the function to get the results 
-os.environ["OPENAI_API_KEY"] = json.load(open("../Credentials.json"))['OPENAI_API_KEY']
+os.environ["OPENAI_API_KEY"] = json.load(open("../credentials.json"))['OPENAI_API_KEY']
 
 # Define the chat GPT model
 def gpt(prompt_input, model="gpt-3.5-turbo-1106"):
