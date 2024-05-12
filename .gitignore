@@ -2,3 +2,4 @@
 .DS_Store
 credentials.json
 *.pyc
+/code/.ipynb_checkpoints
