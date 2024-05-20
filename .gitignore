@@ -3,3 +3,4 @@
 credentials.json
 *.pyc
 /code/.ipynb_checkpoints
+token.json
