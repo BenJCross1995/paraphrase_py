@@ -3,3 +3,7 @@
 credentials.json
 *.pyc
 /code/.ipynb_checkpoints
+/data/guardian_phi/raw
+data/.ipynb_checkpoints/guardian_phi3_sample-checkpoint.jsonl
+/data/guardian_phi/.ipynb_checkpoints
+/data/.ipynb_checkpoints
