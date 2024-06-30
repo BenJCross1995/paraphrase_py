@@ -10,3 +10,5 @@ token.json
 google_credentials.json
 code/token.pickle
 code/token.pickle
+data/guardian_chunked_rephrased_100.jsonl
+data/guardian_chunked_rephrased_1000.jsonl
