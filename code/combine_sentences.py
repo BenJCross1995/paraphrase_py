@@ -13,7 +13,7 @@ def count_words(text):
     """
     return len(text.split())
 
-def concatenate_sentences(df, length_threshold=50, threshold_type='char'):
+def concatenate_sentences(df, length_threshold=50, threshold_type='word'):
     """Concatenate sentences in a DataFrame if their length is less than the length_threshold.
     
     Group sentences by the 'id' column and concatenate them accordingly.
