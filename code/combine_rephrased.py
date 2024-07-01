@@ -124,8 +124,12 @@ def main():
     args = parser.parse_args()
 
     # Pull in the unknown and rephrased docs
-    unknown = read_and_write_docs.read_jsonl_file(args.unknown_file_path)
-    rephrased = read_and_write_docs.read_jsonl_file(args.rephrased_file_path)
+    try:
+        unknown = read_and_write_docs.read_jsonl_file(args.unknown_file_path)
+        rephrased = read_and_write_docs.read_jsonl_file(args.rephrased_file_path)
+    except:
+        unknown = pd.read_csv(args.unknown_file_path)
+        rephrased = pd.read_csv(args.rephrased_file_path)
 
     # Log each doc in the unknown whether to keep or remove
     print("Logging which sentences to keep based on chunks to threshold...")
