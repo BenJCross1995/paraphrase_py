@@ -1,103 +1,140 @@
-from parrot import Parrot
 import argparse
-import json
-import torch
-import warnings
 import read_and_write_docs
+import warnings
 
 import pandas as pd
 
+from parrot import Parrot
+
 warnings.filterwarnings("ignore")
 
-def parrot_paraphrase(phrase, n_iterations, model):
-  stored_phrases = []
+def parrot_paraphrase(phrase, n_iterations, model, diverse=False):
+    """
+    Generates paraphrases for a given phrase using the Parrot paraphraser.
 
-  for i in range(1, n_iterations):
-    paraphrases = model.augment(input_phrase=phrase,
-                                use_gpu=True,
-                                diversity_ranker="levenshtein",
-                                do_diverse=False,
-                                max_return_phrases=100,
-                                max_length=1000,
-                                adequacy_threshold=0.75,
-                                fluency_threshold=0.70)
+    Args:
+        phrase (str): The phrase to be paraphrased.
+        n_iterations (int): Number of iterations to generate paraphrases.
+        diverse (bool, optional): Flag to enable diverse paraphrasing. Defaults to False.
 
-    if paraphrases is not None:
-      num_phrases = len(paraphrases)
+    Returns:
+        list: A list of unique paraphrases.
 
-      for j in range(1, num_phrases):
-        paraphrase = paraphrases[j][0]
-
-        stored_phrases.append(paraphrase)
+    Raises:
+        ValueError: If `diverse` is not a boolean value.
+    """
+    
+    # Set thresholds based on the diversity flag
+    if diverse == False:
+    	print("Diverse = False")
+        diverse = False
+        ad_thresh = 0.99
+        fl_thresh = 0.9
+    elif diverse == True:
+    	print("Diverse = True")
+        diverse = True
+        ad_thresh = 0.7
+        fl_thresh = 0.7
     else:
-      stored_phrases = []
+        raise ValueError("The 'diverse' argument must be a boolean value.")
 
-  result = list(set(stored_phrases))
+    # Initialize the list to store paraphrases
+    stored_phrases = []
 
-  return result
+    # Generate paraphrases for the given number of iterations
+    for i in range(1, n_iterations):
+        paraphrases = model.augment(input_phrase=phrase,
+                                    use_gpu=True,
+                                    diversity_ranker="levenshtein",
+                                    do_diverse=diverse,
+                                    max_return_phrases=100,
+                                    max_length=1000,
+                                    adequacy_threshold=ad_thresh,
+                                    fluency_threshold=fl_thresh)
 
+        # If paraphrases are generated, add them to the stored phrases list
+        if paraphrases is not None:
+            num_phrases = len(paraphrases)
+            for j in range(1, num_phrases):
+                paraphrase = paraphrases[j][0]
+                stored_phrases.append(paraphrase)
+        else:
+            stored_phrases = []
 
-def paraphrase_dataframe(df, save_location, model, n_iterations=10, read_previous=None):
+    # Remove duplicates by converting the list to a set and back to a list
+    result = list(set(stored_phrases))
 
-  if read_previous is not None:
-    completed_df = read_and_write_docs.read_jsonl_file(read_previous)
-    completed_ids = set(completed_df['doc_id'].astype(str) + '_' + completed_df['chunk_id'].astype(str))
-  else:
-    completed_df = pd.DataFrame() # Initialise empty dataframe
-    completed_ids = set()  # Initialize the set to an empty set
+    return result
 
-  new_rows = []
-  for index, row in df.iterrows():
+def paraphrase_dataframe(df, save_location, n_iterations=10, model=None, diverse=False):
+    """
+    Paraphrases the text in the DataFrame and saves the results to JSONL files by document ID.
 
-    row_id = str(row['doc_id']) + '_' + str(row['chunk_id'])
-    if row_id in completed_ids:
-      continue # Skip rows that have already been paraphrased
-    print(f"Paraphrasing sentence {index + 1} out of {df.index.max() + 1}")
-    result = parrot_paraphrase(row['text'], n_iterations, model)
-    for paraphrase in result:
-      new_row = {
-          'index': index,
-          'doc_id': row['doc_id'],
-          'author_id': row['author_id'],
-          'chunk_id': row['chunk_id'],
-          'gender': row['gender'],
-          'age': row['age'],
-          'topic': row['topic'],
-          'sign': row['sign'],
-          'date': row['date'],
-          'paraphrase': paraphrase
-      }
-      new_rows.append(new_row)
+    Args:
+        df (pd.DataFrame): The DataFrame containing the text to be paraphrased.
+        save_location (str): The location to save the JSONL files.
+        n_iterations (int, optional): Number of iterations to generate paraphrases. Defaults to 10.
+        model: The Parrot model to use for paraphrasing.
+        diverse (bool, optional): Flag to enable diverse paraphrasing. Defaults to False.
 
-    new_df = pd.DataFrame(new_rows)
-    completed_df = pd.concat([completed_df, new_df], ignore_index=True)
+    Returns:
+        None
+    """
+    # Get unique document IDs
+    unique_doc_ids = df['doc_id'].unique()
 
-    # Save the DataFrame to a CSV file after each iteration
-    read_and_write_docs.save_as_jsonl(completed_df)
+    # Loop through each document ID
+    for doc_id in unique_doc_ids:
+        # Filter the DataFrame by the current document ID
+        doc_df = df[df['doc_id'] == doc_id]
+        
+        new_rows = []
+        
+        # Loop through each row in the filtered DataFrame
+        for index, row in doc_df.iterrows():
+            print(f"Paraphrasing sentence {index + 1} out of {len(doc_df)} for doc_id {doc_id}")  # Added print statement
+            result = parrot_paraphrase(row['text'], n_iterations, model, diverse)
+            
+            # Add the paraphrases to the new rows list
+            for paraphrase in result:
+                new_row = {
+                    'index': index,
+                    'doc_id': row['doc_id'],
+                    'author_id': row['author_id'],
+                    'chunk_id': row['chunk_id'],
+                    'gender': row['gender'],
+                    'age': row['age'],
+                    'topic': row['topic'],
+                    'sign': row['sign'],
+                    'date': row['date'],
+                    'text': paraphrase
+                }
+                new_rows.append(new_row)
+        
+        # Save the paraphrased results to a JSONL file for the current document ID
+        jsonl_path = f"{save_location}/doc_{doc_id}.jsonl"
+        read_and_write_docs.save_as_jsonl(new_rows, jsonl_path)
+
+    print("Paraphrasing complete.")
 
 def main():
-    """Main function to parse arguments and process the input file.
-    
-    Parses command line arguments, reads the input file, processes the sentences,
-    and saves the output to the specified file path.
-    """
-	
-    # Parse arguments from user
-    parser = argparse.ArgumentParser(description='Paraphrase sentences using the Parrot framework')
-    parser.add_argument('--read_file_path', type=str, help='Path to rephrased jsonl file', required=True)
-    parser.add_argument('--write_file_path', type=str, help='Path to write jsonl file', required=True)
-    parser.add_argument('--model_path', type=str, help='Path to the model', required=True)
-    parser.add_argument('--num_iterations', type=int, default=10, help='The number of model iterations.')
+    parser = argparse.ArgumentParser(description="Paraphrase text in a DataFrame and save the results to JSONL files.")
+    parser.add_argument('input_file', type=str, help='Path to the input jsonl file.')
+    parser.add_argument('save_location', type=str, help='Directory where the JSONL files will be saved.')
+    parser.add_argument('--iterations', type=int, default=10, help='Number of iterations to generate paraphrases. Defaults to 10.')
+    parser.add_argument('--model_tag', type=str, default="prithivida/parrot_paraphraser_on_T5", help='Model tag for the Parrot paraphraser. Defaults to "prithivida/parrot_paraphraser_on_T5".')
+    parser.add_argument('--diverse', action='store_true', help='Enable diverse paraphrasing. Defaults to False.')
+
     args = parser.parse_args()
 
-    # Pull in the unknown and rephrased docs
-    rephrased = read_and_write_docs.read_jsonl_file(args.read_file_path)
+    # Initialize the Parrot model
+    parrot = Parrot(model_tag=args.model_tag)
 
-    parrot = Parrot(args.model_path)
+    # Read the input CSV file into a DataFrame
+    df = read_and_write_docs.read_jsonl_file(args.input_file)
 
-    print("Model Loaded")
-          
-    paraphrase_dataframe(rephrased, args.write_file_path, parrot, n_iterations=args.num_iterations)
+    # Paraphrase the DataFrame and save the results
+    paraphrase_dataframe(df, args.save_location, args.iterations, parrot, args.diverse)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
