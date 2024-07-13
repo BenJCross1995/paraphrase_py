@@ -26,12 +26,10 @@ def parrot_paraphrase(phrase, n_iterations, model, diverse=False):
     
     # Set thresholds based on the diversity flag
     if diverse == False:
-    	print("Diverse = False")
         diverse = False
         ad_thresh = 0.99
         fl_thresh = 0.9
     elif diverse == True:
-    	print("Diverse = True")
         diverse = True
         ad_thresh = 0.7
         fl_thresh = 0.7
