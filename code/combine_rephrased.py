@@ -33,27 +33,15 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
 
     # We only want to apply the algorithm on only docs we have rephrased 
     rephrased_docs = rephrased['doc_id'].unique()
-    unknown = unknown[unknown['id'].isin(rephrased_docs)]
+    unknown = unknown[unknown['doc_id'].isin(rephrased_docs)]
     data = []
 
     # We want to loop across the rows in the unknown df
     for i in range(len(unknown)):
 
-        # Keep the logged data and if the data is not 'kept' then skip the row
-        # This is to make sure no rows are pulling sentences from other docs
-        keep = unknown.iloc[i, unknown.columns.get_loc('keep')]
-        if keep == False:
-            continue
-
         # Keep the variables for each row that matter
-        doc_id = unknown.iloc[i, unknown.columns.get_loc('id')]
+        doc_id = unknown.iloc[i, unknown.columns.get_loc('doc_id')]
         chunk_id = unknown.iloc[i, unknown.columns.get_loc('chunk_id')]
-        subchunk_id = unknown.iloc[i, unknown.columns.get_loc('subchunk_id')]
-
-        # Get the number of chunks in the new unknown text and filter the unknown
-        # data to include those chunks.
-        chunk_count = unknown.iloc[i, unknown.columns.get_loc('chunk_count')]
-        filtered_unknown = unknown.iloc[i:i+chunk_count,]
         
         sentence_data = []
 
@@ -63,23 +51,21 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
             sentences = []
 
             # Want to loop through the rows in the filtered unknown dataframe
-            for index, row in filtered_unknown.iterrows():
+            for index, row in unknown.iterrows():
 
                 # Get the variables to filter the rephrased df for current row of unknown df
-                id_value = row['id']
+                id_value = row['doc_id']
                 chunk_id_value = row['chunk_id']
-                subchunk_id_value = row['subchunk_id']
-                original_sentence = row['original_sentence']
+                original_sentence = row['text']
             
                 filtered_rephrased = rephrased[
                     (rephrased['doc_id'] == id_value) & 
-                    (rephrased['chunk_id'] == chunk_id_value) & 
-                    (rephrased['subchunk_id'] == subchunk_id_value)
+                    (rephrased['chunk_id'] == chunk_id_value)
                 ]
 
                 # Ensure rephrased_list contains only strings of paraphrases and add original sentence
                 # We add the original sentence incase no rephrases were found we wont skip the chunk.
-                rephrased_list = filtered_rephrased['rephrased'].tolist()
+                rephrased_list = filtered_rephrased['paraphrase'].tolist()
                 rephrased_list = [str(item) for item in rephrased_list]
                 rephrased_list.append(original_sentence)
             
@@ -88,6 +74,7 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
 
                 # select a random sentence and add to a list
                 sample_sentence = random.choice(distinct_list)
+            
                 sentences.append(sample_sentence)
 
             # Convert to a paragraph by joining sentences together
@@ -96,7 +83,6 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
             sentence_data.append({
                 'doc_id': doc_id,
                 'chunk_id': chunk_id,
-                'subchunk_id': subchunk_id,
                 'rephrased': paragraph
             })
     
@@ -106,6 +92,55 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
 
     return result_df
 
+def chunk_single_rephrased(unknown, rephrased, num_impostors=10):
+        
+    sentence_data = []
+    doc_id = unknown['doc_id'].unique()[0]
+
+    # Loop however many times the user desires
+    for i in range(num_impostors):
+            
+        sentences = []
+
+        # Want to loop through the rows in the filtered unknown dataframe
+        for index, row in unknown.iterrows():
+
+            # Get the variables to filter the rephrased df for current row of unknown df
+            id_value = row['doc_id']
+            chunk_id_value = row['chunk_id']
+            original_sentence = row['text']
+            
+            filtered_rephrased = rephrased[
+                (rephrased['doc_id'] == id_value) & 
+                (rephrased['chunk_id'] == chunk_id_value)
+            ]
+
+            # Ensure rephrased_list contains only strings of paraphrases and add original sentence
+            # We add the original sentence incase no rephrases were found we wont skip the chunk.
+            rephrased_list = filtered_rephrased['paraphrase'].tolist()
+            rephrased_list = [str(item) for item in rephrased_list]
+            rephrased_list.append(original_sentence)
+            
+            # Remove duplicates by converting to a set and back to a list
+            distinct_list = list(set(rephrased_list))
+
+            # select a random sentence and add to a list
+            sample_sentence = random.choice(distinct_list)
+            
+            sentences.append(sample_sentence)
+
+        # Convert to a paragraph by joining sentences together
+        paragraph = " ".join(sentences)
+            
+        sentence_data.append({
+            'doc_id': doc_id,
+            'rephrased': paragraph
+        })
+    
+    result_df = pd.DataFrame(sentence_data)
+
+    return result_df
+    
 def main():
     """Main function to parse arguments and process the input file.
     
