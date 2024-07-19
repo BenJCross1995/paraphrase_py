@@ -65,7 +65,7 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
 
                 # Ensure rephrased_list contains only strings of paraphrases and add original sentence
                 # We add the original sentence incase no rephrases were found we wont skip the chunk.
-                rephrased_list = filtered_rephrased['paraphrase'].tolist()
+                rephrased_list = filtered_rephrased['text'].tolist()
                 rephrased_list = [str(item) for item in rephrased_list]
                 rephrased_list.append(original_sentence)
             
@@ -117,7 +117,7 @@ def chunk_single_rephrased(unknown, rephrased, num_impostors=10):
 
             # Ensure rephrased_list contains only strings of paraphrases and add original sentence
             # We add the original sentence incase no rephrases were found we wont skip the chunk.
-            rephrased_list = filtered_rephrased['paraphrase'].tolist()
+            rephrased_list = filtered_rephrased['result'].tolist()
             rephrased_list = [str(item) for item in rephrased_list]
             rephrased_list.append(original_sentence)
             
