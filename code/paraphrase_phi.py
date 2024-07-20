@@ -183,18 +183,18 @@ def paraphrase_llm(read_loc, write_loc, error_loc, llm, messages, grammar_path=N
         print("No documents to process.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Paraphrase documents using a local LLM.")
+	parser = argparse.ArgumentParser(description="Paraphrase documents using a local LLM.")
 
-    parser.add_argument("read_loc", type=str, help="File path to the input data.")
-    parser.add_argument("write_loc", type=str, help="Folder path to save the output data.")
-    parser.add_argument("error_loc", type=str, help="Folder path to save error logs.")
-    parser.add_argument("model_path", type=str, help="Path to the local LLM model.")
-    parser.add_argument("grammar_path", type=str, help="Path to the local grammar file.")
-    parser.add_argument("--temperature", type=float, default=0.7, help="Temperature setting for the LLM. Defaults to 0.7.")
-    parser.add_argument("--num_iterations", type=int, default=10, help="Number of iterations to generate paraphrases for each sentence. Defaults to 10.")
-
-    args = parser.parse_args()
-
+	parser.add_argument("read_loc", type=str, help="File path to the input data.")
+	parser.add_argument("write_loc", type=str, help="Folder path to save the output data.")
+	parser.add_argument("error_loc", type=str, help="Folder path to save error logs.")
+	parser.add_argument("model_path", type=str, help="Path to the local LLM model.")
+	parser.add_argument("grammar_path", type=str, default=None, help="Path to the local grammar file.")
+	parser.add_argument("--temperature", type=float, default=0.7, help="Temperature setting for the LLM. Defaults to 0.7.")
+	parser.add_argument("--num_iterations", type=int, default=10, help="Number of iterations to generate paraphrases for each sentence. Defaults to 10.")
+	
+	args = parser.parse_args()
+	
 	system_prompt = (
 	    "You are a paraphrasing assistant, given a sentence generate as many paraphrased "
 	    "sentences as possible while preserving the original semantic meaning and style. "
@@ -246,15 +246,15 @@ if __name__ == "__main__":
 
 
 	llm = Llama(
-	    model_path=model_path,
+	    model_path=args.model_path,
 	    n_ctx=4096,
 	    n_threads=10,
 	    n_gpu_layers=-1,
 	    verbose=False,
 	    # flash_attn=True
 	)
-
-    paraphrase_llm(read_loc=args.read_loc,
+	
+	paraphrase_llm(read_loc=args.read_loc,
 				   write_loc=args.write_loc,
 				   error_loc=args.error_loc,
 				   llm=llm,
