@@ -1,28 +1,13 @@
+import argparse
+import copy
 import json
 import os
+import re
 import read_and_write_docs
 
 import pandas as pd
 
-from llama_cpp import Llama
-from langchain_community.llms import LlamaCpp
-from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
-
-def initialise_llm(model_path, grammar_path):
-    
-    llm = LlamaCpp(
-        model_path=model_path,
-        n_ctx=4096,
-        n_threads=10,
-        n_gpu_layers=-1,
-        n_batch=512,
-        f16_kv=True,
-        verbose=False,
-        # flash_attn=True,
-        grammar_path=grammar_path
-    )
-
-    return llm
+from llama_cpp import Llama, LlamaGrammar
 
 def filter_dataframe_by_folder(df_path, folder_path):
     """Filters a DataFrame by removing rows with doc_ids that already exist as files in a specified folder.
@@ -97,30 +82,70 @@ def check_trailing_bracket(llm_output):
 
     return llm_output
 
-def format_output(llm_output):
+def format_output(llm_output, error_loc):
     """
     Formats the LLM output to ensure it is a valid JSON list.
     Tries to parse it as a JSON list and returns the parsed list if successful.
-    If parsing fails, prints the result and returns an empty list.
+    If parsing fails, attempts to replace single quotes with double quotes and try again.
+    If parsing still fails, prints the result and returns an empty list.
     """
-    
+
     result = check_starting_bracket(llm_output)
     result = check_trailing_bracket(result)
-
     try:
+        # Attempt to parse the JSON string
         parsed_result = json.loads(result)
         return parsed_result
-    except json.JSONDecodeError:
-        print("JSONDecodeError")
+    except json.JSONDecodeError as e:
+        # Print detailed error information
+        print("JSONDecodeError:")
+        read_and_write_docs.save_error_as_txt(result, error_loc)
         return []
 
-def paraphrase_llm(read_loc, write_loc, chain, num_iterations):
-    filtered_df = filter_dataframe_by_folder(read_loc, write_loc)
+def call_local_llm(llm, messages, sentence, grammar=None, temperature=0.7):
 
+    # Create a copy of the messages list
+    messages_copy = copy.deepcopy(messages)
+    
+    # Append the new message to the copied list
+    new_message = {"role": "user", "content": sentence}
+    messages_copy.append(new_message)
+
+    response = llm.create_chat_completion(messages=messages_copy, grammar=grammar, temperature=temperature)
+    
+    # Extract the answer and finish reason
+    answer = response['choices'][0]['message']['content']
+    
+    return answer
+	
+def paraphrase_llm(read_loc, write_loc, error_loc, llm, messages, grammar_path=None, temperature=0.7, num_iterations=10):
+    """
+    Paraphrases documents using an LLM and saves the results.
+
+    Args:
+        read_loc (str): File path to the input data.
+        write_loc (str): Folder path to save the output data.
+        error_loc (str): Folder path to save error logs.
+        llm (object): LLM object used for paraphrasing.
+        messages (list): Input messages list for the LLM.
+        temperature (float, optional): Temperature setting for the LLM. Defaults to 0.7.
+        num_iterations (int, optional): Number of iterations to generate paraphrases for each sentence. Defaults to 10.
+
+    Returns:
+        None
+    """
+    filtered_df = filter_dataframe_by_folder(read_loc, write_loc)
+    
     if len(filtered_df) > 0:
+
+        if grammar_path:
+            print("Grammar Path Found")
+            grammar=LlamaGrammar.from_file(grammar_path, verbose=False)
+        
         # Get the remaining docs as a list to loop through
         remaining_docs = filtered_df['doc_id'].unique()
-        print(f"{len(remaining_docs)} Documents Left to Paraphrase")
+        total_docs = len(remaining_docs)
+        print(f"{total_docs} Documents Left to Paraphrase")
 
         for doc_id in remaining_docs:
             # Initialize an empty list to store dictionaries
@@ -134,11 +159,16 @@ def paraphrase_llm(read_loc, write_loc, chain, num_iterations):
                 print(f"Processing Document ID: {doc_id}, Chunk ID: {chunk_id} Out Of {num_chunks}")
 
                 for i in range(num_iterations):
-                    print(f"Iteration {i+1}:")
-                    result = chain.invoke({"original_user_supplied_sentence": sentence})
+                    print(f"Iteration: {i + 1}")
+                    if grammar_path:
+                        result = call_local_llm(llm, messages, sentence, grammar, temperature)
+                    else:
+                        result = call_local_llm(llm, messages, sentence, temperature=temperature)
+                        
+                    formatted_result = format_output(result, error_loc)
 
                     # Append each result as a new dictionary to result_data
-                    for item in result:
+                    for item in formatted_result:
                         result_data.append({'doc_id': doc_id, 'chunk_id': chunk_id, 'result': item})
 
             # Create DataFrame from list of dictionaries for the current doc_id
@@ -152,67 +182,83 @@ def paraphrase_llm(read_loc, write_loc, chain, num_iterations):
     else:
         print("No documents to process.")
 
-def main(model_path, grammar_path, data_loc, save_loc, num_iterations):
-
-    
-    system_prompt = """
-    Given the sentence, generate as many paraphrased sentences as possible while preserving the original semantic meaning and style. 
-    Return the rephrased sentences in a python list format. Aim for AT LEAST TWENTY sentences. DO NOT INCLUDE ANY NOTES OR ADDITIONAL TEXT IN THE OUTPUT.
-    
-    An example is below:
-    --------
-    Sentence: ```"Known for being very delicate, the skill could take a lifetime to master."```
-    
-    Rephrased Sentences: ```["The skill is well known for its delicacy and could require a lifetime to perfect.", "The skill's reputation for delicateness suggests that it could take a whole lifetime to master.", "It may take a lifetime to master the skill, which is renowned for its delicacy.", "The delicacy of the skill means it could take a lifetime to master."]```
-    --------
-    Sentence: ```{original_user_supplied_sentence}```
-    """
-    
-    final_prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", system_prompt),
-            ("human", "{original_user_supplied_sentence}"),
-        ]
-    )
-
-    def convert_to_phi(original_sentence, prompt_input=final_prompt):
-    
-        messages = prompt_input.messages
-        
-        formatted_messages = ""
-    
-        for message in messages:
-            if isinstance(message, SystemMessagePromptTemplate):
-                formatted_messages += f"<|assistant|>\n{message.prompt.template.replace('\n', '')} <|end|>\n"
-            elif isinstance(message, FewShotChatMessagePromptTemplate):
-                formatted_messages += f"<|user|>\n{message.examples[0]['original_user_supplied_sentence'].replace('\n', '')} <|end|>\n"
-                formatted_messages += f"<|assistant|>\n{message.examples[0]} <|end|>\n"
-            elif isinstance(message, HumanMessagePromptTemplate):
-                formatted_messages += f"<|user|>\n{message.prompt.template.replace('\n', '')} <|end|>\n"
-        
-        formatted_messages += f"<|assistant|>"
-    
-        formatted_prompt = formatted_messages.replace("<|user|>\n{original_user_supplied_sentence} <|end|>",
-                                                      f"<|user|>\n{original_sentence} <|end|>")
-        
-        return formatted_prompt
-
-
-    llm = initialise_llm(model_path, grammar_path)
-
-    chain = final_prompt | convert_to_phi | llm | format_output
-
-    paraphrase_llm(data_loc, save_loc, chain, num_iterations)
-
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process file paths and number of iterations.')
-    parser.add_argument('model_path', type=str, help='Path to the model')
-    parser.add_argument('grammar_path', type=str, help='Path to the grammar')
-    parser.add_argument('data_loc', type=str, help='Path to the data location')
-    parser.add_argument('save_loc', type=str, help='Path to save location')
-    parser.add_argument('--num_iterations', type=int, default=10, help='Number of iterations (default: 10)')
+	parser = argparse.ArgumentParser(description="Paraphrase documents using a local LLM.")
 
-    args = parser.parse_args()
+	parser.add_argument("read_loc", type=str, help="File path to the input data.")
+	parser.add_argument("write_loc", type=str, help="Folder path to save the output data.")
+	parser.add_argument("error_loc", type=str, help="Folder path to save error logs.")
+	parser.add_argument("model_path", type=str, help="Path to the local LLM model.")
+	parser.add_argument("grammar_path", type=str, default=None, help="Path to the local grammar file.")
+	parser.add_argument("--temperature", type=float, default=0.7, help="Temperature setting for the LLM. Defaults to 0.7.")
+	parser.add_argument("--num_iterations", type=int, default=10, help="Number of iterations to generate paraphrases for each sentence. Defaults to 10.")
+	
+	args = parser.parse_args()
+	
+	system_prompt = (
+	    "You are a paraphrasing assistant, given a sentence generate as many paraphrased "
+	    "sentences as possible while preserving the original semantic meaning and style. "
+	    "Return the rephrased sentences as a Python list. Aim for AT LEAST TWENTY sentences. "
+	    "DO NOT INCLUDE ANY NOTE OR ADDITIONAL TEXT IN THE OUTPUT. "
+	    "Make sure to WRAP ALL SENTENCES IN DOUBLE QUOTES AND USE ESCAPED SINGLE QUOTES INSIDE THEM. "
+	    "If there are NAMED ENTITIES in the sentence DO NOT change the name."
+	)
+	
+	# Convert the text to a single line string
+	system_prompt = repr(system_prompt)
+	
+	example_input = "Known for being very delicate, the skill could take a lifetime to master."
+	
+	# List of paraphrased sentences
+	paraphrased_sentences = [
+	    "Famed for its delicacy, mastering the skill could take a lifetime.",
+	    "Renowned for its fragility, the skill might require a lifetime to perfect.",
+	    "Recognized for being extremely delicate, mastering this skill could take an entire lifetime.",
+	    "Known for its delicate nature, the skill might take a lifetime to master.",
+	    "Esteemed for its delicate nature, it could take a lifetime to master this skill.",
+	    "Noted for its delicateness, the skill could take a whole lifetime to master.",
+	    "Celebrated for being very delicate, mastering the skill might take a lifetime.",
+	    "Admired for its fragility, the skill could take an entire lifetime to perfect.",
+	    "Acclaimed for its delicate quality, mastering this skill might take a lifetime.",
+	    "Distinguished by its delicacy, it could take a lifetime to master the skill.",
+	    "Famous for being very delicate, the skill might take a lifetime to perfect.",
+	    "Acknowledged for its delicate nature, mastering the skill could take a whole lifetime.",
+	    "Well-known for its fragility, the skill might require a lifetime to master.",
+	    "Recognized for its delicate quality, it could take a lifetime to master the skill.",
+	    "Notable for being very delicate, the skill could require a lifetime to master.",
+	    "Renowned for its delicateness, mastering the skill might take a whole lifetime.",
+	    "Famed for its fragile nature, the skill could take a lifetime to master.",
+	    "Celebrated for its delicate nature, mastering the skill could take an entire lifetime.",
+	    "Noted for being extremely delicate, the skill might take a lifetime to master.",
+	    "Esteemed for its fragility, the skill might require an entire lifetime to perfect.",
+	    "Acclaimed for being very delicate, mastering this skill could take a whole lifetime.",
+	    "Admired for its delicate quality, it might take a lifetime to master the skill."
+	]
+	
+	# Convert the list to a single line string
+	example_output = repr(paraphrased_sentences)
+	
+	input_messages = [
+	    {"role": "system", "content": system_prompt},
+	    {"role": "user", "content": example_input},
+	    {"role": "assistant", "content": example_output}
+	]
 
-    main(args.model_path, args.grammar_path, args.data_loc, args.save_loc, args.num_iterations)
+
+	llm = Llama(
+	    model_path=args.model_path,
+	    n_ctx=4096,
+	    n_threads=10,
+	    n_gpu_layers=-1,
+	    verbose=False,
+	    # flash_attn=True
+	)
+	
+	paraphrase_llm(read_loc=args.read_loc,
+				   write_loc=args.write_loc,
+				   error_loc=args.error_loc,
+				   llm=llm,
+				   messages=input_messages,
+				   num_iterations=args.num_iterations,
+				   grammar_path=args.grammar_path,
+				   temperature=args.temperature)
