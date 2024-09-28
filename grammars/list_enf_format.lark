@@ -1,0 +1,9 @@
+start: "[" items "]"
+
+items: item ("," item)*
+
+item: ESCAPED_STRING
+
+%import common.ESCAPED_STRING
+%import common.WS
+%ignore WS

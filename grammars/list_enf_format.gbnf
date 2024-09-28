@@ -1,0 +1,14 @@
+start: "[" items "]" "\n"
+
+items: item ("," ws* item)*
+
+item: string
+
+string: "\"" word (ws+ word)* "\""
+
+word: /[a-zA-Z0-9.,!?;:'()]+/
+
+ws: " "
+
+%ignore ws
+%ignore "\n"
