@@ -140,6 +140,156 @@ def chunk_single_rephrased(unknown, rephrased, num_impostors=10):
     result_df = pd.DataFrame(sentence_data)
 
     return result_df
+
+def chunk_single_rephrased_with_scores(unknown, rephrased, score_column, num_impostors=10):
+        
+    sentence_data = []
+    doc_id = unknown['doc_id'].unique()[0]
+
+    # Loop however many times the user desires
+    for i in range(num_impostors):
+            
+        sentences = []
+        total_score = 0
+        num_chunks = 0
+
+        # Loop through the rows in the filtered unknown dataframe
+        for index, row in unknown.iterrows():
+
+            # Get the variables to filter the rephrased df for the current row of the unknown df
+            id_value = row['doc_id']
+            chunk_id_value = row['chunk_id']
+            original_sentence = row['text']
+            
+            filtered_rephrased = rephrased[
+                (rephrased['doc_id'] == id_value) & 
+                (rephrased['chunk_id'] == chunk_id_value)
+            ]
+
+            # Ensure rephrased_list contains only strings of paraphrases and add original sentence
+            rephrased_list = filtered_rephrased['result'].tolist()
+            rephrased_list = [str(item) for item in rephrased_list]
+            rephrased_list.append(original_sentence)
+            
+            # Remove duplicates by converting to a set and back to a list
+            distinct_list = list(set(rephrased_list))
+
+            # Select a random sentence and add to a list
+            sample_sentence = random.choice(distinct_list)
+            
+            # If the chosen sentence equals the original sentence, set score to 0
+            if sample_sentence == original_sentence:
+                sentence_score = 0
+            else:
+                # Otherwise, get the corresponding score from the rephrased DataFrame
+                score_row = filtered_rephrased[filtered_rephrased['result'] == sample_sentence]
+                if not score_row.empty:
+                    sentence_score = score_row[score_column].values[0]
+                else:
+                    sentence_score = 0
+
+            total_score += sentence_score
+            num_chunks += 1
+            sentences.append(sample_sentence)
+
+        # Convert to a paragraph by joining sentences together
+        paragraph = " ".join(sentences)
+        
+        # Calculate the average score for the paragraph
+        if num_chunks > 0:
+            average_score = total_score / num_chunks
+        else:
+            average_score = 0
+            
+        sentence_data.append({
+            'doc_id': doc_id,
+            'rephrased': paragraph,
+            'average_score': average_score
+        })
+    
+    result_df = pd.DataFrame(sentence_data)
+
+    return result_df
+
+
+def chunk_single_rephrased_with_scores_list(unknown, rephrased, score_column, num_impostors=10):
+        
+    sentence_data = []
+    doc_id = unknown['doc_id'].unique()[0]
+
+    # Loop however many times the user desires
+    for i in range(num_impostors):
+            
+        sentences = []
+        total_score = 0
+        num_chunks = 0
+        score_list = []  # List to keep track of individual scores
+        original_sentence_list = []  # List to keep track of original sentences
+        rephrased_sentence_list = []  # List to keep track of rephrased sentences
+
+        # Loop through the rows in the filtered unknown dataframe
+        for index, row in unknown.iterrows():
+
+            # Get the variables to filter the rephrased df for the current row of the unknown df
+            id_value = row['doc_id']
+            chunk_id_value = row['chunk_id']
+            original_sentence = row['text']
+            
+            filtered_rephrased = rephrased[
+                (rephrased['doc_id'] == id_value) & 
+                (rephrased['chunk_id'] == chunk_id_value)
+            ]
+
+            # Ensure rephrased_list contains only strings of paraphrases and add original sentence
+            rephrased_list = filtered_rephrased['result'].tolist()
+            rephrased_list = [str(item) for item in rephrased_list]
+            rephrased_list.append(original_sentence)
+            
+            # Remove duplicates by converting to a set and back to a list
+            distinct_list = list(set(rephrased_list))
+
+            # Select a random sentence and add to a list
+            sample_sentence = random.choice(distinct_list)
+            
+            # If the chosen sentence equals the original sentence, set score to 0
+            if sample_sentence == original_sentence:
+                sentence_score = 0
+            else:
+                # Otherwise, get the corresponding score from the rephrased DataFrame
+                score_row = filtered_rephrased[filtered_rephrased['result'] == sample_sentence]
+                if not score_row.empty:
+                    sentence_score = score_row[score_column].values[0]
+                else:
+                    sentence_score = 0
+
+            total_score += sentence_score
+            num_chunks += 1
+            sentences.append(sample_sentence)
+            score_list.append(sentence_score)  # Add the score to the score list
+            original_sentence_list.append(original_sentence)  # Track original sentences
+            rephrased_sentence_list.append(sample_sentence)  # Track rephrased sentences
+
+        # Convert to a paragraph by joining sentences together
+        paragraph = " ".join(sentences)
+        
+        # Calculate the average score for the paragraph
+        if num_chunks > 0:
+            average_score = total_score / num_chunks
+        else:
+            average_score = 0
+            
+        sentence_data.append({
+            'doc_id': doc_id,
+            'rephrased': paragraph,
+            'average_score': average_score,
+            'score_list': score_list,  # Add the score list
+            'original_sentence_list': original_sentence_list,  # Add the original sentence list
+            'rephrased_sentence_list': rephrased_sentence_list  # Add the rephrased sentence list
+        })
+    
+    result_df = pd.DataFrame(sentence_data)
+
+    return result_df
     
 def main():
     """Main function to parse arguments and process the input file.
