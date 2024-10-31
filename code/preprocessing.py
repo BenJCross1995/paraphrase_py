@@ -13,7 +13,7 @@ def sample_equal_distribution(df, total_rows):
     # Check if total_rows is even, if not, make it even
     if total_rows % 2 != 0:
         total_rows += 1
-        print("The total number of rows should be even for equal distribution. Adjusting to the next even number:", total_rows)
+        print(f"The total number of rows should be even for equal distribution. Adjusting to the next even number: {total_rows}")
     
     # Filter rows where 'same' is True and sample
     same_true_sample = df[df['same'] == True].sample(n=total_rows // 2, replace=True)
@@ -27,56 +27,86 @@ def sample_equal_distribution(df, total_rows):
     return sample
 
 def filter_ids_from_df(df, truth_sample):
+    
     filtered_df = df[df['id'].isin(truth_sample['id'])].sort_values(by='id').reset_index(drop=True)
     return filtered_df
 
-# ----SENTENCE SPLITTING---- #
 def split_sentences(text):
-    
+    """
+    Splits a text string into sentences.
+
+    Parameters:
+    - text: The input text string.
+
+    Returns:
+    - A list of sentences.
+    """
+
+    # Remove all single and double quotation marks from the string.
     text = re.sub(r'[\'"]', '', text)
-    # Define the regular expression pattern to split at sentence-ending punctuation marks
+    
+    # Split the string at sentence-ending punctuation marks
     pattern = r'(?<=[.!?]) +'
-    # Split the text using the regular expression pattern
     sentences = re.split(pattern, text)
+    
     # Strip leading and trailing whitespace from each sentence
     sentences = [sentence.strip() for sentence in sentences]
+    
     return sentences
 
-# Function to count words in a text
 def count_words(text):
+    """Counts the words in a text string"""
+    
     return len(text.split())
 
 def apply_sentence_split(df, input_col='text', output_col='text'):
-    
+    """
+    Splits sentences in each row of the DataFrame and restructures the DataFrame.
+
+    Parameters:
+    - df: DataFrame with text data.
+    - input_col: Column name with the original text.
+    - output_col: Column name for the output split text.
+
+    Returns:
+    - Expanded DataFrame with split sentences.
+    """
+
+    # Apply the sentence split function across the user selected input column
     df['sentence'] = df[input_col].apply(split_sentences)
-    
+
+    # Explode the list of sentences creating a row per sentence then remove the column.
     df_expanded = df.explode('sentence').reset_index(drop=True)
-    
     df_expanded = df_expanded.drop(columns=input_col)
-    
     df_expanded.rename(columns={'sentence':output_col}, inplace=True)
-    
+
+    # TODO - Check if a better way to do this.
     df_expanded.insert(1, 'chunk_id', df_expanded.groupby('id').cumcount())
-    
-    df_expanded.insert(4, 'word_count', df_expanded['text'].apply(count_words))
-    
+    df_expanded.insert(4, 'word_count', df_expanded[output_col].apply(count_words))
+
+    # Remove any empty sentences.
     df_expanded = df_expanded[df_expanded['word_count'] >= 1]
     
     return df_expanded
 
 def split_rows_by_word_count(df, num_words):
     """
-    Split rows in DataFrame where word_count exceeds 'n' words into chunks of at most 'n' words.
-    Keeps the same values for all other columns apart from chunk_id.
+    Splits rows with excessive word counts in a sentence into smaller chunks.
+
+    Parameters:
+    - df: DataFrame with text data.
+
+    Returns:
+    - DataFrame with rows split into word count-complient chunks.
     """
     
     max_words = df['word_count'].max()
     
     if max_words >= num_words:
     
-        new_rows = []  # Initialize an empty list to store the new rows
-        drop_indices = []  # Initialize a list to store indices of rows to be dropped
-        chunk_counter = {}  # Initialize a dictionary to keep track of chunk counts for each chunk_id
+        new_rows = [] 
+        drop_indices = []
+        chunk_counter = {}  # Dictionary to keep track of chunk counts for each chunk_id
     
         # Iterate over the DataFrame
         for index, row in df.iterrows():

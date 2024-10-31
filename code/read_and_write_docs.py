@@ -6,7 +6,17 @@ import pandas as pd
 
 from datetime import datetime
 
-def read_jsonl_file(file_path):
+def read_jsonl(file_path):
+    """
+    Reads a JSONL file and converts it into a pandas DataFrame.
+
+    Parameters:
+    - file_path: Path to the JSON file to read.
+
+    Returns:
+    - A pandas Dataframe containing the data from the JSONL file.
+    """
+    
     data = []
     with open(file_path, 'r') as file:
         for line in file:
@@ -15,7 +25,15 @@ def read_jsonl_file(file_path):
     data = pd.DataFrame(data)
     return data
 
-def save_as_jsonl(data, output_file_path):
+def write_jsonl(data, output_file_path):
+    """
+    Writes a pandas DataFrame to a JSONL file.
+
+    Parameters:
+    - data: A pandas DataFrame to save.
+    - output_file_path: Path to the output JSONL file.
+    """
+    
     with open(output_file_path, 'w') as file:
         for _, row in data.iterrows():
             json.dump(row.to_dict(), file)
@@ -23,11 +41,10 @@ def save_as_jsonl(data, output_file_path):
 
 def save_error_as_txt(data, folder_path):
     """
-    Saves the given content to a .txt file in the specified folder path.
-    The filename is generated using a timestamp and UUID to ensure uniqueness.
+    Saves error data to a folder path.
     
     Parameters:
-    - content: The content (string) to be saved.
+    - data: The pandas DataFrame to save.
     - folder_path: The folder path where the file should be saved.
     """
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
