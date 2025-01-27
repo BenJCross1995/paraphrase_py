@@ -1,0 +1,1860 @@
+Date: 6/1/2025
+Time: 1:47
+Phone Number: +447756976114
+Message: test
+--------------------
+Date: 6/1/2025
+Time: 20:16
+Phone Number: +447756976114
+Message: test
+--------------------
+Date: 6/1/2025
+Time: 20:18
+Phone Number: +447756976114
+Message: test
+--------------------
+Date: 6/1/2025
+Time: 20:19
+Phone Number: +447756976114
+Message: test
+--------------------
+Date: 6/1/2025
+Time: 20:19
+Phone Number: +447756976114
+Message: This was done using Python Code
+--------------------
+Date: 6/1/2025
+Time: 20:20
+Phone Number: +447756976114
+Message: This was done using Python Code - yes my guy
+--------------------
+Date: 6/1/2025
+Time: 20:22
+Phone Number: +447808810315
+Message: Yo Houdini Kid, this is a message straight from Python on my computer laaaa
+--------------------
+Date: 6/1/2025
+Time: 22:34
+Phone Number: +447756976114
+Message: File processed my guy
+--------------------
+Date: 6/1/2025
+Time: 22:58
+Phone Number: +447756976114
+Message: File processed my guy
+--------------------
+Date: 6/1/2025
+Time: 23:32
+Phone Number: +447756976114
+Message: File 1 of 113 processed - batch_alantovey_text_1 - Time taken 1119s
+--------------------
+Date: 6/1/2025
+Time: 23:39
+Phone Number: +447756976114
+Message: File 2 of 113 processed - batch_alantovey_text_2 - Time taken 401s
+--------------------
+Date: 6/1/2025
+Time: 23:47
+Phone Number: +447756976114
+Message: File 3 of 113 processed - batch_alasdairreid_text_3 - Time taken 479s
+--------------------
+Date: 6/1/2025
+Time: 23:52
+Phone Number: +447756976114
+Message: File 4 of 113 processed - batch_alastairgood_text_1 - Time taken 284s
+--------------------
+Date: 7/1/2025
+Time: 0:23
+Phone Number: +447756976114
+Message: File 5 of 113 processed - batch_alastairsmart_text_2 - Time taken 1834s
+--------------------
+Date: 7/1/2025
+Time: 0:48
+Phone Number: +447756976114
+Message: File 6 of 113 processed - batch_alastairsooke_text_2 - Time taken 1490s
+--------------------
+Date: 7/1/2025
+Time: 1:20
+Phone Number: +447756976114
+Message: File 7 of 113 processed - batch_alastairsooke_text_3 - Time taken 1844s
+--------------------
+Date: 7/1/2025
+Time: 1:29
+Phone Number: +447756976114
+Message: File 8 of 113 processed - batch_alexjames_text_1 - Time taken 566s
+--------------------
+Date: 7/1/2025
+Time: 1:40
+Phone Number: +447756976114
+Message: File 9 of 113 processed - batch_alexjames_text_3 - Time taken 631s
+--------------------
+Date: 7/1/2025
+Time: 1:44
+Phone Number: +447756976114
+Message: File 10 of 113 processed - batch_aliceaudley_text_1 - Time taken 209s
+--------------------
+Date: 7/1/2025
+Time: 1:52
+Phone Number: +447756976114
+Message: File 11 of 113 processed - batch_alicephilipson_text_3 - Time taken 440s
+--------------------
+Date: 7/1/2025
+Time: 2:15
+Phone Number: +447756976114
+Message: File 12 of 113 processed - batch_alicevincent_text_1 - Time taken 1367s
+--------------------
+Date: 7/1/2025
+Time: 23:22
+Phone Number: +447756976114
+Message: File 1 of 100 processed - batch_allisonpearson_text_1 - Time taken 52s
+--------------------
+Date: 7/1/2025
+Time: 23:23
+Phone Number: +447756976114
+Message: File 2 of 100 processed - batch_allisonpearson_text_2 - Time taken 53s
+--------------------
+Date: 7/1/2025
+Time: 23:35
+Phone Number: +447756976114
+Message: File 3 of 100 processed - batch_allisterheath_text_1 - Time taken 711s
+--------------------
+Date: 7/1/2025
+Time: 23:40
+Phone Number: +447756976114
+Message: File 4 of 100 processed - batch_allisterheath_text_2 - Time taken 288s
+--------------------
+Date: 7/1/2025
+Time: 23:47
+Phone Number: +447756976114
+Message: File 5 of 100 processed - batch_ambroseevans_pritchard_text_1 - Time taken 383s
+--------------------
+Date: 7/1/2025
+Time: 23:49
+Phone Number: +447756976114
+Message: File 6 of 100 processed - batch_ambroseevans_pritchard_text_2 - Time taken 70s
+--------------------
+Date: 7/1/2025
+Time: 23:55
+Phone Number: +447756976114
+Message: File 7 of 100 processed - batch_andrewcritchlow_text_1 - Time taken 352s
+--------------------
+Date: 8/1/2025
+Time: 0:1
+Phone Number: +447756976114
+Message: File 8 of 100 processed - batch_andrewcritchlow_text_3 - Time taken 366s
+--------------------
+Date: 8/1/2025
+Time: 0:3
+Phone Number: +447756976114
+Message: File 9 of 100 processed - batch_andrewenglish_text_3 - Time taken 88s
+--------------------
+Date: 8/1/2025
+Time: 0:9
+Phone Number: +447756976114
+Message: File 10 of 100 processed - batch_andrewgilligan_text_1 - Time taken 328s
+--------------------
+Date: 8/1/2025
+Time: 0:15
+Phone Number: +447756976114
+Message: File 11 of 100 processed - batch_andrewgilligan_text_3 - Time taken 330s
+--------------------
+Date: 8/1/2025
+Time: 0:23
+Phone Number: +447756976114
+Message: File 12 of 100 processed - batch_andrewmarszal_text_1 - Time taken 501s
+--------------------
+Date: 8/1/2025
+Time: 0:25
+Phone Number: +447756976114
+Message: File 13 of 100 processed - batch_andrewmarszal_text_2 - Time taken 66s
+--------------------
+Date: 8/1/2025
+Time: 0:26
+Phone Number: +447756976114
+Message: File 14 of 100 processed - batch_annatyzack_text_1 - Time taken 70s
+--------------------
+Date: 8/1/2025
+Time: 0:28
+Phone Number: +447756976114
+Message: File 15 of 100 processed - batch_anthonyperegrine_text_1 - Time taken 77s
+--------------------
+Date: 8/1/2025
+Time: 0:48
+Phone Number: +447756976114
+Message: File 16 of 100 processed - batch_auslancramb_text_3 - Time taken 1161s
+--------------------
+Date: 8/1/2025
+Time: 0:49
+Phone Number: +447756976114
+Message: File 17 of 100 processed - batch_beewilson_text_3 - Time taken 70s
+--------------------
+Date: 8/1/2025
+Time: 1:6
+Phone Number: +447756976114
+Message: File 18 of 100 processed - batch_benfarmer_text_2 - Time taken 995s
+--------------------
+Date: 8/1/2025
+Time: 1:7
+Phone Number: +447756976114
+Message: File 19 of 100 processed - batch_benfarmer_text_3 - Time taken 15s
+--------------------
+Date: 8/1/2025
+Time: 1:9
+Phone Number: +447756976114
+Message: File 20 of 100 processed - batch_benfogle_text_2 - Time taken 101s
+--------------------
+Date: 8/1/2025
+Time: 1:10
+Phone Number: +447756976114
+Message: File 21 of 100 processed - batch_benfogle_text_3 - Time taken 62s
+--------------------
+Date: 8/1/2025
+Time: 1:12
+Phone Number: +447756976114
+Message: File 22 of 100 processed - batch_benlawrence_text_1 - Time taken 80s
+--------------------
+Date: 8/1/2025
+Time: 1:13
+Phone Number: +447756976114
+Message: File 23 of 100 processed - batch_benlawrence_text_2 - Time taken 72s
+--------------------
+Date: 8/1/2025
+Time: 1:15
+Phone Number: +447756976114
+Message: File 24 of 100 processed - batch_benmarlow_text_1 - Time taken 62s
+--------------------
+Date: 8/1/2025
+Time: 1:15
+Phone Number: +447756976114
+Message: File 25 of 100 processed - batch_benmarlow_text_2 - Time taken 19s
+--------------------
+Date: 8/1/2025
+Time: 1:17
+Phone Number: +447756976114
+Message: File 26 of 100 processed - batch_bernadettemcnulty_text_2 - Time taken 64s
+--------------------
+Date: 8/1/2025
+Time: 1:18
+Phone Number: +447756976114
+Message: File 27 of 100 processed - batch_beverleyturner_text_1 - Time taken 23s
+--------------------
+Date: 8/1/2025
+Time: 1:19
+Phone Number: +447756976114
+Message: File 28 of 100 processed - batch_beverleyturner_text_3 - Time taken 58s
+--------------------
+Date: 8/1/2025
+Time: 1:20
+Phone Number: +447756976114
+Message: File 29 of 100 processed - batch_borisjohnson_text_2 - Time taken 79s
+--------------------
+Date: 8/1/2025
+Time: 2:21
+Phone Number: +447756976114
+Message: File 30 of 100 processed - batch_brianmoore_text_2 - Time taken 3605s
+--------------------
+Date: 8/1/2025
+Time: 2:58
+Phone Number: +447756976114
+Message: File 31 of 100 processed - batch_brianmoore_text_3 - Time taken 2201s
+--------------------
+Date: 8/1/2025
+Time: 3:16
+Phone Number: +447756976114
+Message: File 32 of 100 processed - batch_brunowaterfield_text_3 - Time taken 1028s
+--------------------
+Date: 8/1/2025
+Time: 3:32
+Phone Number: +447756976114
+Message: File 33 of 100 processed - batch_bryonygordon_text_2 - Time taken 974s
+--------------------
+Date: 8/1/2025
+Time: 3:54
+Phone Number: +447756976114
+Message: File 34 of 100 processed - batch_bunnyguinness_text_2 - Time taken 1283s
+--------------------
+Date: 8/1/2025
+Time: 4:54
+Phone Number: +447756976114
+Message: File 35 of 100 processed - batch_bunnyguinness_text_3 - Time taken 3604s
+--------------------
+Date: 8/1/2025
+Time: 4:56
+Phone Number: +447756976114
+Message: File 36 of 100 processed - batch_cameronmacphail_text_3 - Time taken 94s
+--------------------
+Date: 8/1/2025
+Time: 5:1
+Phone Number: +447756976114
+Message: File 37 of 100 processed - batch_camillaturner_text_1 - Time taken 241s
+--------------------
+Date: 8/1/2025
+Time: 5:20
+Phone Number: +447756976114
+Message: File 38 of 100 processed - batch_camillaturner_text_2 - Time taken 1159s
+--------------------
+Date: 8/1/2025
+Time: 5:43
+Phone Number: +447756976114
+Message: File 39 of 100 processed - batch_carolinekent_text_2 - Time taken 1348s
+--------------------
+Date: 8/1/2025
+Time: 5:54
+Phone Number: +447756976114
+Message: File 40 of 100 processed - batch_carolinekent_text_3 - Time taken 631s
+--------------------
+Date: 8/1/2025
+Time: 6:0
+Phone Number: +447756976114
+Message: File 41 of 100 processed - batch_carolinemcghie_text_1 - Time taken 337s
+--------------------
+Date: 8/1/2025
+Time: 6:1
+Phone Number: +447756976114
+Message: File 42 of 100 processed - batch_carolinemcghie_text_3 - Time taken 13s
+--------------------
+Date: 8/1/2025
+Time: 6:1
+Phone Number: +447756976114
+Message: File 43 of 100 processed - batch_carolynhart_text_1 - Time taken 13s
+--------------------
+Date: 8/1/2025
+Time: 6:3
+Phone Number: +447756976114
+Message: File 44 of 100 processed - batch_carolynhart_text_2 - Time taken 98s
+--------------------
+Date: 8/1/2025
+Time: 6:5
+Phone Number: +447756976114
+Message: File 45 of 100 processed - batch_catalinastogdon_text_1 - Time taken 70s
+--------------------
+Date: 8/1/2025
+Time: 6:23
+Phone Number: +447756976114
+Message: File 46 of 100 processed - batch_catalinastogdon_text_3 - Time taken 1079s
+--------------------
+Date: 8/1/2025
+Time: 6:25
+Phone Number: +447756976114
+Message: File 47 of 100 processed - batch_catherinegee_text_2 - Time taken 120s
+--------------------
+Date: 8/1/2025
+Time: 6:27
+Phone Number: +447756976114
+Message: File 48 of 100 processed - batch_charlesmoore_text_1 - Time taken 107s
+--------------------
+Date: 8/1/2025
+Time: 6:29
+Phone Number: +447756976114
+Message: File 49 of 100 processed - batch_charlesmoore_text_2 - Time taken 68s
+--------------------
+Date: 8/1/2025
+Time: 6:30
+Phone Number: +447756976114
+Message: File 50 of 100 processed - batch_charlesspencer_text_1 - Time taken 68s
+--------------------
+Date: 8/1/2025
+Time: 6:32
+Phone Number: +447756976114
+Message: File 51 of 100 processed - batch_charlesspencer_text_2 - Time taken 80s
+--------------------
+Date: 8/1/2025
+Time: 6:34
+Phone Number: +447756976114
+Message: File 52 of 100 processed - batch_charlottebeugge_text_1 - Time taken 73s
+--------------------
+Date: 8/1/2025
+Time: 6:35
+Phone Number: +447756976114
+Message: File 53 of 100 processed - batch_charlottebeugge_text_3 - Time taken 84s
+--------------------
+Date: 8/1/2025
+Time: 6:38
+Phone Number: +447756976114
+Message: File 54 of 100 processed - batch_charlotteruncie_text_1 - Time taken 114s
+--------------------
+Date: 8/1/2025
+Time: 6:39
+Phone Number: +447756976114
+Message: File 55 of 100 processed - batch_charlotteruncie_text_3 - Time taken 68s
+--------------------
+Date: 8/1/2025
+Time: 6:41
+Phone Number: +447756976114
+Message: File 56 of 100 processed - batch_chrisharvey_text_1 - Time taken 87s
+--------------------
+Date: 8/1/2025
+Time: 6:42
+Phone Number: +447756976114
+Message: File 57 of 100 processed - batch_chrisharvey_text_3 - Time taken 66s
+--------------------
+Date: 8/1/2025
+Time: 6:43
+Phone Number: +447756976114
+Message: File 58 of 100 processed - batch_chrisknapman_text_1 - Time taken 52s
+--------------------
+Date: 8/1/2025
+Time: 6:45
+Phone Number: +447756976114
+Message: File 59 of 100 processed - batch_chrisknapman_text_2 - Time taken 79s
+--------------------
+Date: 8/1/2025
+Time: 15:24
+Phone Number: +447756976114
+Message: File 60 of 100 processed - batch_christopherbooker_text_1 - Time taken 31118s
+--------------------
+Date: 8/1/2025
+Time: 15:26
+Phone Number: +447756976114
+Message: File 61 of 100 processed - batch_christopherbooker_text_3 - Time taken 82s
+--------------------
+Date: 8/1/2025
+Time: 16:7
+Phone Number: +447756976114
+Message: File 62 of 100 processed - batch_christopherhope_text_1 - Time taken 2474s
+--------------------
+Date: 8/1/2025
+Time: 16:9
+Phone Number: +447756976114
+Message: File 63 of 100 processed - batch_christopherhope_text_3 - Time taken 82s
+--------------------
+Date: 8/1/2025
+Time: 16:20
+Phone Number: +447756976114
+Message: File 64 of 100 processed - batch_christopherhowse_text_1 - Time taken 638s
+--------------------
+Date: 8/1/2025
+Time: 16:21
+Phone Number: +447756976114
+Message: File 65 of 100 processed - batch_christophermiddleton_text_2 - Time taken 59s
+--------------------
+Date: 8/1/2025
+Time: 16:23
+Phone Number: +447756976114
+Message: File 66 of 100 processed - batch_christophermiddleton_text_3 - Time taken 72s
+--------------------
+Date: 8/1/2025
+Time: 16:30
+Phone Number: +447756976114
+Message: File 67 of 100 processed - batch_clairecarter_text_1 - Time taken 404s
+--------------------
+Date: 8/1/2025
+Time: 16:32
+Phone Number: +447756976114
+Message: File 68 of 100 processed - batch_clairecarter_text_2 - Time taken 82s
+--------------------
+Date: 8/1/2025
+Time: 16:33
+Phone Number: +447756976114
+Message: File 69 of 100 processed - batch_clairecohen_text_1 - Time taken 81s
+--------------------
+Date: 8/1/2025
+Time: 16:35
+Phone Number: +447756976114
+Message: File 70 of 100 processed - batch_claireduffin_text_2 - Time taken 75s
+--------------------
+Date: 8/1/2025
+Time: 16:37
+Phone Number: +447756976114
+Message: File 71 of 100 processed - batch_claireduffin_text_3 - Time taken 79s
+--------------------
+Date: 8/1/2025
+Time: 16:38
+Phone Number: +447756976114
+Message: File 72 of 100 processed - batch_cliveaslet_text_1 - Time taken 84s
+--------------------
+Date: 8/1/2025
+Time: 16:41
+Phone Number: +447756976114
+Message: File 73 of 100 processed - batch_clivejames_text_2 - Time taken 118s
+--------------------
+Date: 8/1/2025
+Time: 16:42
+Phone Number: +447756976114
+Message: File 74 of 100 processed - batch_craigmclean_text_1 - Time taken 66s
+--------------------
+Date: 8/1/2025
+Time: 16:43
+Phone Number: +447756976114
+Message: File 75 of 100 processed - batch_davidblair_text_2 - Time taken 18s
+--------------------
+Date: 8/1/2025
+Time: 16:45
+Phone Number: +447756976114
+Message: File 76 of 100 processed - batch_davidgritten_text_2 - Time taken 101s
+--------------------
+Date: 8/1/2025
+Time: 16:46
+Phone Number: +447756976114
+Message: File 77 of 100 processed - batch_deannelson_text_1 - Time taken 57s
+--------------------
+Date: 8/1/2025
+Time: 16:47
+Phone Number: +447756976114
+Message: File 78 of 100 processed - batch_derekpringle_text_3 - Time taken 62s
+--------------------
+Date: 8/1/2025
+Time: 16:49
+Phone Number: +447756976114
+Message: File 79 of 100 processed - batch_dianahenry_text_1 - Time taken 84s
+--------------------
+Date: 8/1/2025
+Time: 16:51
+Phone Number: +447756976114
+Message: File 80 of 100 processed - batch_edcumming_text_1 - Time taken 92s
+--------------------
+Date: 8/1/2025
+Time: 16:53
+Phone Number: +447756976114
+Message: File 81 of 100 processed - batch_edcumming_text_2 - Time taken 84s
+--------------------
+Date: 8/1/2025
+Time: 17:33
+Phone Number: +447756976114
+Message: File 82 of 100 processed - batch_emilygosden_text_2 - Time taken 2420s
+--------------------
+Date: 8/1/2025
+Time: 17:35
+Phone Number: +447756976114
+Message: File 83 of 100 processed - batch_gabywood_text_1 - Time taken 76s
+--------------------
+Date: 8/1/2025
+Time: 17:36
+Phone Number: +447756976114
+Message: File 84 of 100 processed - batch_gavinmairs_text_2 - Time taken 60s
+--------------------
+Date: 8/1/2025
+Time: 17:38
+Phone Number: +447756976114
+Message: File 85 of 100 processed - batch_geoffreyboycott_text_1 - Time taken 64s
+--------------------
+Date: 8/1/2025
+Time: 17:39
+Phone Number: +447756976114
+Message: File 86 of 100 processed - batch_geoffreylean_text_2 - Time taken 56s
+--------------------
+Date: 8/1/2025
+Time: 17:41
+Phone Number: +447756976114
+Message: File 87 of 100 processed - batch_gilesmole_text_3 - Time taken 79s
+--------------------
+Date: 8/1/2025
+Time: 17:42
+Phone Number: +447756976114
+Message: File 88 of 100 processed - batch_gordonrayner_text_1 - Time taken 80s
+--------------------
+Date: 8/1/2025
+Time: 17:44
+Phone Number: +447756976114
+Message: File 89 of 100 processed - batch_gordonrayner_text_3 - Time taken 63s
+--------------------
+Date: 8/1/2025
+Time: 17:45
+Phone Number: +447756976114
+Message: File 90 of 100 processed - batch_graemepaton_text_2 - Time taken 77s
+--------------------
+Date: 8/1/2025
+Time: 17:46
+Phone Number: +447756976114
+Message: File 91 of 100 processed - batch_graemepaton_text_3 - Time taken 41s
+--------------------
+Date: 8/1/2025
+Time: 17:48
+Phone Number: +447756976114
+Message: File 92 of 100 processed - batch_grahamnorton_text_1 - Time taken 76s
+--------------------
+Date: 8/1/2025
+Time: 17:50
+Phone Number: +447756976114
+Message: File 93 of 100 processed - batch_grahamnorton_text_2 - Time taken 99s
+--------------------
+Date: 8/1/2025
+Time: 18:5
+Phone Number: +447756976114
+Message: File 94 of 100 processed - batch_grahamruddick_text_1 - Time taken 873s
+--------------------
+Date: 8/1/2025
+Time: 18:21
+Phone Number: +447756976114
+Message: File 95 of 100 processed - batch_hannahfurness_text_1 - Time taken 943s
+--------------------
+Date: 8/1/2025
+Time: 18:22
+Phone Number: +447756976114
+Message: File 96 of 100 processed - batch_hannahstrange_text_1 - Time taken 78s
+--------------------
+Date: 8/1/2025
+Time: 18:24
+Phone Number: +447756976114
+Message: File 97 of 100 processed - batch_harrietalexander_text_1 - Time taken 77s
+--------------------
+Date: 8/1/2025
+Time: 18:25
+Phone Number: +447756976114
+Message: File 98 of 100 processed - batch_harrydequetteville_text_1 - Time taken 38s
+--------------------
+Date: 8/1/2025
+Time: 18:27
+Phone Number: +447756976114
+Message: File 99 of 100 processed - batch_harrywallop_text_1 - Time taken 80s
+--------------------
+Date: 8/1/2025
+Time: 18:28
+Phone Number: +447756976114
+Message: File 100 of 100 processed - batch_horatiaharrod_text_2 - Time taken 82s
+--------------------
+Date: 8/1/2025
+Time: 18:29
+Phone Number: +447756976114
+Message: All files processed, time taken 68883s
+--------------------
+Date: 9/1/2025
+Time: 23:54
+Phone Number: +447756976114
+Message: All files processed, time taken 0s
+--------------------
+Date: 9/1/2025
+Time: 23:56
+Group ID: Python Notifications
+Message: All files processed, time taken 0s
+--------------------
+Date: 10/1/2025
+Time: 2:0
+Phone Number: +447756976114
+Message: File 1 of 105 processed - batch_TripAdvisor_acbw_8 - Time taken 3540s
+--------------------
+Date: 10/1/2025
+Time: 3:19
+Phone Number: +447756976114
+Message: File 2 of 105 processed - batch_TripAdvisor_AllanBLondon - Time taken 4724s
+--------------------
+Date: 10/1/2025
+Time: 3:24
+Phone Number: +447756976114
+Message: File 3 of 105 processed - batch_TripAdvisor_Andrew M - Time taken 333s
+--------------------
+Date: 10/1/2025
+Time: 4:1
+Phone Number: +447756976114
+Message: File 4 of 105 processed - batch_TripAdvisor_Andrew W - Time taken 2183s
+--------------------
+Date: 10/1/2025
+Time: 4:20
+Phone Number: +447756976114
+Message: File 5 of 105 processed - batch_TripAdvisor_Angelco - Time taken 1135s
+--------------------
+Date: 10/1/2025
+Time: 4:26
+Phone Number: +447756976114
+Message: File 6 of 105 processed - batch_TripAdvisor_anilegna - Time taken 333s
+--------------------
+Date: 10/1/2025
+Time: 14:21
+Phone Number: +447756976114
+Message: File 7 of 105 processed - batch_TripAdvisor_ARUANO - Time taken 35687s
+--------------------
+Date: 10/1/2025
+Time: 14:40
+Phone Number: +447756976114
+Message: File 8 of 105 processed - batch_TripAdvisor_asmile - Time taken 1100s
+--------------------
+Date: 10/1/2025
+Time: 14:49
+Phone Number: +447756976114
+Message: File 9 of 105 processed - batch_TripAdvisor_Aussie8 - Time taken 545s
+--------------------
+Date: 10/1/2025
+Time: 14:52
+Phone Number: +447756976114
+Message: File 10 of 105 processed - batch_TripAdvisor_Aztec_Tripper - Time taken 183s
+--------------------
+Date: 10/1/2025
+Time: 14:54
+Phone Number: +447756976114
+Message: File 11 of 105 processed - batch_TripAdvisor_Bandlady - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 15:2
+Phone Number: +447756976114
+Message: File 12 of 105 processed - batch_TripAdvisor_bdwhite1 - Time taken 506s
+--------------------
+Date: 10/1/2025
+Time: 15:8
+Phone Number: +447756976114
+Message: File 13 of 105 processed - batch_TripAdvisor_beekay458 - Time taken 305s
+--------------------
+Date: 10/1/2025
+Time: 15:9
+Phone Number: +447756976114
+Message: File 14 of 105 processed - batch_TripAdvisor_bigfozbelper_England - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 15:17
+Phone Number: +447756976114
+Message: File 15 of 105 processed - batch_TripAdvisor_blondfromBeantown - Time taken 472s
+--------------------
+Date: 10/1/2025
+Time: 15:18
+Phone Number: +447756976114
+Message: File 16 of 105 processed - batch_TripAdvisor_Bobbi26 - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 15:19
+Phone Number: +447756976114
+Message: File 17 of 105 processed - batch_TripAdvisor_BraddyBarcelona - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 15:42
+Phone Number: +447756976114
+Message: File 18 of 105 processed - batch_TripAdvisor_Bug3 - Time taken 1372s
+--------------------
+Date: 10/1/2025
+Time: 15:43
+Phone Number: +447756976114
+Message: File 19 of 105 processed - batch_TripAdvisor_calligcat - Time taken 53s
+--------------------
+Date: 10/1/2025
+Time: 15:45
+Phone Number: +447756976114
+Message: File 20 of 105 processed - batch_TripAdvisor_capturedplanet - Time taken 57s
+--------------------
+Date: 10/1/2025
+Time: 15:50
+Phone Number: +447756976114
+Message: File 21 of 105 processed - batch_TripAdvisor_CaracasCorrespondent - Time taken 304s
+--------------------
+Date: 10/1/2025
+Time: 15:51
+Phone Number: +447756976114
+Message: File 22 of 105 processed - batch_TripAdvisor_caseydee - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 15:58
+Phone Number: +447756976114
+Message: File 23 of 105 processed - batch_TripAdvisor_charlenedj - Time taken 393s
+--------------------
+Date: 10/1/2025
+Time: 16:3
+Phone Number: +447756976114
+Message: File 24 of 105 processed - batch_TripAdvisor_ChilliCat16 - Time taken 263s
+--------------------
+Date: 10/1/2025
+Time: 16:3
+Phone Number: +447756976114
+Message: File 25 of 105 processed - batch_TripAdvisor_Chris S - Time taken 15s
+--------------------
+Date: 10/1/2025
+Time: 16:4
+Phone Number: +447756976114
+Message: File 26 of 105 processed - batch_TripAdvisor_CiaraB - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 16:5
+Phone Number: +447756976114
+Message: File 27 of 105 processed - batch_TripAdvisor_Claire G - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 16:6
+Phone Number: +447756976114
+Message: File 28 of 105 processed - batch_TripAdvisor_CPThomas - Time taken 12s
+--------------------
+Date: 10/1/2025
+Time: 16:17
+Phone Number: +447756976114
+Message: File 29 of 105 processed - batch_TripAdvisor_David S - Time taken 636s
+--------------------
+Date: 10/1/2025
+Time: 16:17
+Phone Number: +447756976114
+Message: File 30 of 105 processed - batch_TripAdvisor_David T - Time taken 13s
+--------------------
+Date: 10/1/2025
+Time: 16:18
+Phone Number: +447756976114
+Message: File 31 of 105 processed - batch_TripAdvisor_DavidBLancs - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 16:48
+Phone Number: +447756976114
+Message: File 32 of 105 processed - batch_TripAdvisor_davidfisher - Time taken 1761s
+--------------------
+Date: 10/1/2025
+Time: 16:49
+Phone Number: +447756976114
+Message: File 33 of 105 processed - batch_TripAdvisor_DCSacramento - Time taken 60s
+--------------------
+Date: 10/1/2025
+Time: 16:50
+Phone Number: +447756976114
+Message: File 34 of 105 processed - batch_TripAdvisor_DeanCalgary_Alberta - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 17:18
+Phone Number: +447756976114
+Message: File 35 of 105 processed - batch_TripAdvisor_DeVito - Time taken 1632s
+--------------------
+Date: 10/1/2025
+Time: 17:19
+Phone Number: +447756976114
+Message: File 36 of 105 processed - batch_TripAdvisor_Dexter48507 - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 17:20
+Phone Number: +447756976114
+Message: File 37 of 105 processed - batch_TripAdvisor_dkona - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 17:21
+Phone Number: +447756976114
+Message: File 38 of 105 processed - batch_TripAdvisor_dreemin2 - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 17:22
+Phone Number: +447756976114
+Message: File 39 of 105 processed - batch_TripAdvisor_EduardTravels - Time taken 14s
+--------------------
+Date: 10/1/2025
+Time: 17:23
+Phone Number: +447756976114
+Message: File 40 of 105 processed - batch_TripAdvisor_familymanHongKong - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 17:23
+Phone Number: +447756976114
+Message: File 41 of 105 processed - batch_TripAdvisor_Georgespicer - Time taken 20s
+--------------------
+Date: 10/1/2025
+Time: 17:25
+Phone Number: +447756976114
+Message: File 42 of 105 processed - batch_TripAdvisor_Greg M - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 17:42
+Phone Number: +447756976114
+Message: File 43 of 105 processed - batch_TripAdvisor_gtpatton - Time taken 1052s
+--------------------
+Date: 10/1/2025
+Time: 17:44
+Phone Number: +447756976114
+Message: File 44 of 105 processed - batch_TripAdvisor_hellommg - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 17:45
+Phone Number: +447756976114
+Message: File 45 of 105 processed - batch_TripAdvisor_india1939 - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 17:46
+Phone Number: +447756976114
+Message: File 46 of 105 processed - batch_TripAdvisor_Iris - Time taken 52s
+--------------------
+Date: 10/1/2025
+Time: 17:47
+Phone Number: +447756976114
+Message: File 47 of 105 processed - batch_TripAdvisor_Janesse - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 17:48
+Phone Number: +447756976114
+Message: File 48 of 105 processed - batch_TripAdvisor_JeanneAlbi - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 17:49
+Phone Number: +447756976114
+Message: File 49 of 105 processed - batch_TripAdvisor_Jetstream1958 - Time taken 13s
+--------------------
+Date: 10/1/2025
+Time: 17:50
+Phone Number: +447756976114
+Message: File 50 of 105 processed - batch_TripAdvisor_jetzoom99 - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 17:50
+Phone Number: +447756976114
+Message: File 51 of 105 processed - batch_TripAdvisor_jim4thetravelpro - Time taken 14s
+--------------------
+Date: 10/1/2025
+Time: 17:51
+Phone Number: +447756976114
+Message: File 52 of 105 processed - batch_TripAdvisor_JJB - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 17:53
+Phone Number: +447756976114
+Message: File 53 of 105 processed - batch_TripAdvisor_joeb1249 - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 17:54
+Phone Number: +447756976114
+Message: File 54 of 105 processed - batch_TripAdvisor_JohnAndTheresa - Time taken 52s
+--------------------
+Date: 10/1/2025
+Time: 17:55
+Phone Number: +447756976114
+Message: File 55 of 105 processed - batch_TripAdvisor_Karen F - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 17:56
+Phone Number: +447756976114
+Message: File 56 of 105 processed - batch_TripAdvisor_Kathleen1819 - Time taken 53s
+--------------------
+Date: 10/1/2025
+Time: 17:56
+Phone Number: +447756976114
+Message: File 57 of 105 processed - batch_TripAdvisor_keryninbali - Time taken 13s
+--------------------
+Date: 10/1/2025
+Time: 17:58
+Phone Number: +447756976114
+Message: File 58 of 105 processed - batch_TripAdvisor_L1 - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 18:42
+Phone Number: +447756976114
+Message: All files processed, time taken 0s
+--------------------
+Date: 10/1/2025
+Time: 19:18
+Phone Number: +447756976114
+Message: File 1 of 46 processed - batch_TripAdvisor_Lauren M - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 19:22
+Phone Number: +447756976114
+Message: File 2 of 46 processed - batch_TripAdvisor_Linda M - Time taken 229s
+--------------------
+Date: 10/1/2025
+Time: 19:23
+Phone Number: +447756976114
+Message: File 3 of 46 processed - batch_TripAdvisor_Lisa G - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 19:25
+Phone Number: +447756976114
+Message: File 4 of 46 processed - batch_TripAdvisor_Lisa R - Time taken 53s
+--------------------
+Date: 10/1/2025
+Time: 19:26
+Phone Number: +447756976114
+Message: File 5 of 46 processed - batch_TripAdvisor_Liz1953 - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 19:26
+Phone Number: +447756976114
+Message: File 6 of 46 processed - batch_TripAdvisor_LJWNYC2008 - Time taken 17s
+--------------------
+Date: 10/1/2025
+Time: 19:27
+Phone Number: +447756976114
+Message: File 7 of 46 processed - batch_TripAdvisor_luigi66 - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 19:29
+Phone Number: +447756976114
+Message: File 8 of 46 processed - batch_TripAdvisor_LuvSLO - Time taken 59s
+--------------------
+Date: 10/1/2025
+Time: 19:30
+Phone Number: +447756976114
+Message: File 9 of 46 processed - batch_TripAdvisor_MaineIzzy - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 19:30
+Phone Number: +447756976114
+Message: File 10 of 46 processed - batch_TripAdvisor_Mano40 - Time taken 13s
+--------------------
+Date: 10/1/2025
+Time: 19:31
+Phone Number: +447756976114
+Message: File 11 of 46 processed - batch_TripAdvisor_Mark H - Time taken 15s
+--------------------
+Date: 10/1/2025
+Time: 19:32
+Phone Number: +447756976114
+Message: File 12 of 46 processed - batch_TripAdvisor_Michael C - Time taken 57s
+--------------------
+Date: 10/1/2025
+Time: 19:33
+Phone Number: +447756976114
+Message: File 13 of 46 processed - batch_TripAdvisor_MikeyBikey - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 19:34
+Phone Number: +447756976114
+Message: File 14 of 46 processed - batch_TripAdvisor_mitchmu - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 19:35
+Phone Number: +447756976114
+Message: File 15 of 46 processed - batch_TripAdvisor_mrselett - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 19:37
+Phone Number: +447756976114
+Message: File 16 of 46 processed - batch_TripAdvisor_Nicks_gal - Time taken 53s
+--------------------
+Date: 10/1/2025
+Time: 19:37
+Phone Number: +447756976114
+Message: File 17 of 46 processed - batch_TripAdvisor_PandEKew - Time taken 14s
+--------------------
+Date: 10/1/2025
+Time: 19:40
+Phone Number: +447756976114
+Message: File 18 of 46 processed - batch_TripAdvisor_Paul W - Time taken 144s
+--------------------
+Date: 10/1/2025
+Time: 19:41
+Phone Number: +447756976114
+Message: File 19 of 46 processed - batch_TripAdvisor_Peter G - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 19:42
+Phone Number: +447756976114
+Message: File 20 of 46 processed - batch_TripAdvisor_Peter R - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 19:43
+Phone Number: +447756976114
+Message: File 21 of 46 processed - batch_TripAdvisor_Peter W - Time taken 58s
+--------------------
+Date: 10/1/2025
+Time: 20:1
+Phone Number: +447756976114
+Message: File 22 of 46 processed - batch_TripAdvisor_Peter_Joan - Time taken 1020s
+--------------------
+Date: 10/1/2025
+Time: 20:2
+Phone Number: +447756976114
+Message: File 23 of 46 processed - batch_TripAdvisor_Rachel_Whales - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 20:3
+Phone Number: +447756976114
+Message: File 24 of 46 processed - batch_TripAdvisor_Rags2006 - Time taken 54s
+--------------------
+Date: 10/1/2025
+Time: 20:4
+Phone Number: +447756976114
+Message: File 25 of 46 processed - batch_TripAdvisor_RallyMonkey - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 20:5
+Phone Number: +447756976114
+Message: File 26 of 46 processed - batch_TripAdvisor_RedSox28 - Time taken 59s
+--------------------
+Date: 10/1/2025
+Time: 20:6
+Phone Number: +447756976114
+Message: File 27 of 46 processed - batch_TripAdvisor_robstrash - Time taken 59s
+--------------------
+Date: 10/1/2025
+Time: 20:8
+Phone Number: +447756976114
+Message: File 28 of 46 processed - batch_TripAdvisor_RoryMc - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 20:9
+Phone Number: +447756976114
+Message: File 29 of 46 processed - batch_TripAdvisor_Samuel-D - Time taken 58s
+--------------------
+Date: 10/1/2025
+Time: 20:10
+Phone Number: +447756976114
+Message: File 30 of 46 processed - batch_TripAdvisor_Sauvarin - Time taken 57s
+--------------------
+Date: 10/1/2025
+Time: 20:28
+Phone Number: +447756976114
+Message: File 31 of 46 processed - batch_TripAdvisor_scot5 - Time taken 1039s
+--------------------
+Date: 10/1/2025
+Time: 20:30
+Phone Number: +447756976114
+Message: File 32 of 46 processed - batch_TripAdvisor_Scott M - Time taken 141s
+--------------------
+Date: 10/1/2025
+Time: 20:48
+Phone Number: +447756976114
+Message: File 33 of 46 processed - batch_TripAdvisor_screenname060309 - Time taken 1034s
+--------------------
+Date: 10/1/2025
+Time: 20:49
+Phone Number: +447756976114
+Message: File 34 of 46 processed - batch_TripAdvisor_SharonInAVolvo - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 20:50
+Phone Number: +447756976114
+Message: File 35 of 46 processed - batch_TripAdvisor_shawana80 - Time taken 55s
+--------------------
+Date: 10/1/2025
+Time: 20:52
+Phone Number: +447756976114
+Message: File 36 of 46 processed - batch_TripAdvisor_skylane9 - Time taken 99s
+--------------------
+Date: 10/1/2025
+Time: 20:52
+Phone Number: +447756976114
+Message: File 37 of 46 processed - batch_TripAdvisor_Stephen B - Time taken 14s
+--------------------
+Date: 10/1/2025
+Time: 20:54
+Phone Number: +447756976114
+Message: File 38 of 46 processed - batch_TripAdvisor_Steve C - Time taken 58s
+--------------------
+Date: 10/1/2025
+Time: 21:11
+Phone Number: +447756976114
+Message: File 39 of 46 processed - batch_TripAdvisor_The_Mystic - Time taken 1016s
+--------------------
+Date: 10/1/2025
+Time: 21:12
+Phone Number: +447756976114
+Message: File 40 of 46 processed - batch_TripAdvisor_Thomidog - Time taken 58s
+--------------------
+Date: 10/1/2025
+Time: 21:13
+Phone Number: +447756976114
+Message: File 41 of 46 processed - batch_TripAdvisor_Tomcod - Time taken 56s
+--------------------
+Date: 10/1/2025
+Time: 21:14
+Phone Number: +447756976114
+Message: File 42 of 46 processed - batch_TripAdvisor_travelwiz13 - Time taken 62s
+--------------------
+Date: 10/1/2025
+Time: 21:32
+Phone Number: +447756976114
+Message: File 43 of 46 processed - batch_TripAdvisor_watchitLondon - Time taken 1027s
+--------------------
+Date: 10/1/2025
+Time: 21:33
+Phone Number: +447756976114
+Message: File 44 of 46 processed - batch_TripAdvisor_xelar8 - Time taken 58s
+--------------------
+Date: 10/1/2025
+Time: 21:34
+Phone Number: +447756976114
+Message: File 45 of 46 processed - batch_TripAdvisor_yomaryjo - Time taken 58s
+--------------------
+Date: 17/1/2025
+Time: 17:49
+Phone Number: +447756976114
+Message: File 1 of 144 processed - batch_Enron_Andy.zipper - Time taken 61s
+--------------------
+Date: 17/1/2025
+Time: 17:50
+Phone Number: +447756976114
+Message: File 2 of 144 processed - batch_Enron_Barry.tycholiz - Time taken 59s
+--------------------
+Date: 17/1/2025
+Time: 17:51
+Phone Number: +447756976114
+Message: File 3 of 144 processed - batch_Enron_Benjamin.rogers - Time taken 60s
+--------------------
+Date: 17/1/2025
+Time: 17:52
+Phone Number: +447756976114
+Message: File 4 of 144 processed - batch_Enron_Bill.williams - Time taken 59s
+--------------------
+Date: 17/1/2025
+Time: 17:53
+Phone Number: +447756976114
+Message: File 5 of 144 processed - batch_Enron_Cara.semperger - Time taken 62s
+--------------------
+Date: 17/1/2025
+Time: 17:55
+Phone Number: +447756976114
+Message: File 6 of 144 processed - batch_Enron_Carol.clair - Time taken 61s
+--------------------
+Date: 17/1/2025
+Time: 17:56
+Phone Number: +447756976114
+Message: File 7 of 144 processed - batch_Enron_Chris.dorland - Time taken 63s
+--------------------
+Date: 17/1/2025
+Time: 17:57
+Phone Number: +447756976114
+Message: File 8 of 144 processed - batch_Enron_Cooper.richey - Time taken 57s
+--------------------
+Date: 17/1/2025
+Time: 17:58
+Phone Number: +447756976114
+Message: File 9 of 144 processed - batch_Enron_D.steffes - Time taken 58s
+--------------------
+Date: 17/1/2025
+Time: 17:59
+Phone Number: +447756976114
+Message: File 10 of 144 processed - batch_Enron_D.thomas - Time taken 17s
+--------------------
+Date: 17/1/2025
+Time: 18:0
+Phone Number: +447756976114
+Message: File 11 of 144 processed - batch_Enron_Dan.hyvl - Time taken 61s
+--------------------
+Date: 17/1/2025
+Time: 18:1
+Phone Number: +447756976114
+Message: File 12 of 144 processed - batch_Enron_Dana.davis - Time taken 59s
+--------------------
+Date: 17/1/2025
+Time: 18:3
+Phone Number: +447756976114
+Message: File 13 of 144 processed - batch_Enron_Daren.farmer - Time taken 60s
+--------------------
+Date: 17/1/2025
+Time: 18:3
+Phone Number: +447756976114
+Message: File 14 of 144 processed - batch_Enron_Darrell.schoolcraft - Time taken 16s
+--------------------
+Date: 17/1/2025
+Time: 18:4
+Phone Number: +447756976114
+Message: File 15 of 144 processed - batch_Enron_Darron.giron - Time taken 63s
+--------------------
+Date: 17/1/2025
+Time: 18:5
+Phone Number: +447756976114
+Message: File 16 of 144 processed - batch_Enron_David.delainey - Time taken 19s
+--------------------
+Date: 17/1/2025
+Time: 18:6
+Phone Number: +447756976114
+Message: File 17 of 144 processed - batch_Enron_Debra.perlingiere - Time taken 57s
+--------------------
+Date: 17/1/2025
+Time: 18:7
+Phone Number: +447756976114
+Message: File 18 of 144 processed - batch_Enron_Drew.fossum - Time taken 18s
+--------------------
+Date: 17/1/2025
+Time: 18:8
+Phone Number: +447756976114
+Message: File 19 of 144 processed - batch_Enron_Elizabeth.sager - Time taken 59s
+--------------------
+Date: 17/1/2025
+Time: 18:9
+Phone Number: +447756976114
+Message: File 20 of 144 processed - batch_Enron_Errol.mclaughlin - Time taken 18s
+--------------------
+Date: 17/1/2025
+Time: 18:9
+Phone Number: +447756976114
+Message: File 21 of 144 processed - batch_Enron_Gerald.nemec - Time taken 18s
+--------------------
+Date: 17/1/2025
+Time: 18:10
+Phone Number: +447756976114
+Message: File 22 of 144 processed - batch_Enron_James.derrick - Time taken 65s
+--------------------
+Date: 17/1/2025
+Time: 18:11
+Phone Number: +447756976114
+Message: File 23 of 144 processed - batch_Enron_Jane.tholt - Time taken 19s
+--------------------
+Date: 17/1/2025
+Time: 18:11
+Phone Number: +447756976114
+Message: File 24 of 144 processed - batch_Enron_Janette.elbertson - Time taken 17s
+--------------------
+Date: 17/1/2025
+Time: 18:13
+Phone Number: +447756976114
+Message: File 25 of 144 processed - batch_Enron_Jeff.dasovich - Time taken 61s
+--------------------
+Date: 17/1/2025
+Time: 18:13
+Phone Number: +447756976114
+Message: File 26 of 144 processed - batch_Enron_Jeff.skilling - Time taken 17s
+--------------------
+Date: 17/1/2025
+Time: 18:15
+Phone Number: +447756976114
+Message: File 27 of 144 processed - batch_Enron_Jeffrey.shankman - Time taken 62s
+--------------------
+Date: 17/1/2025
+Time: 18:16
+Phone Number: +447756976114
+Message: File 28 of 144 processed - batch_Enron_Joannie.williamson - Time taken 60s
+--------------------
+Date: 17/1/2025
+Time: 18:17
+Phone Number: +447756976114
+Message: File 29 of 144 processed - batch_Enron_John.arnold - Time taken 61s
+--------------------
+Date: 17/1/2025
+Time: 18:18
+Phone Number: +447756976114
+Message: File 30 of 144 processed - batch_Enron_K.allen - Time taken 59s
+--------------------
+Date: 17/1/2025
+Time: 18:20
+Phone Number: +447756976114
+Message: File 31 of 144 processed - batch_Enron_Kam.keiser - Time taken 62s
+--------------------
+Date: 17/1/2025
+Time: 18:20
+Phone Number: +447756976114
+Message: File 32 of 144 processed - batch_Enron_Kate.symes - Time taken 18s
+--------------------
+Date: 17/1/2025
+Time: 20:46
+Phone Number: +447756976114
+Message: File 33 of 144 processed - batch_andy_zipper_mail_1 - Time taken 8760s
+--------------------
+Date: 17/1/2025
+Time: 22:1
+Phone Number: +447756976114
+Message: File 34 of 144 processed - batch_andy_zipper_mail_3 - Time taken 4489s
+--------------------
+Date: 17/1/2025
+Time: 23:8
+Phone Number: +447756976114
+Message: File 35 of 144 processed - batch_andy_zipper_mail_4 - Time taken 3974s
+--------------------
+Date: 17/1/2025
+Time: 23:51
+Phone Number: +447756976114
+Message: File 36 of 144 processed - batch_andy_zipper_mail_5 - Time taken 2557s
+--------------------
+Date: 18/1/2025
+Time: 0:12
+Phone Number: +447756976114
+Message: File 37 of 144 processed - batch_barry_tycholiz_mail_1 - Time taken 1236s
+--------------------
+Date: 18/1/2025
+Time: 0:39
+Phone Number: +447756976114
+Message: File 38 of 144 processed - batch_barry_tycholiz_mail_3 - Time taken 1621s
+--------------------
+Date: 18/1/2025
+Time: 1:6
+Phone Number: +447756976114
+Message: File 39 of 144 processed - batch_barry_tycholiz_mail_4 - Time taken 1600s
+--------------------
+Date: 18/1/2025
+Time: 1:47
+Phone Number: +447756976114
+Message: File 40 of 144 processed - batch_barry_tycholiz_mail_5 - Time taken 2458s
+--------------------
+Date: 18/1/2025
+Time: 2:16
+Phone Number: +447756976114
+Message: File 41 of 144 processed - batch_benjamin_rogers_mail_2 - Time taken 1750s
+--------------------
+Date: 18/1/2025
+Time: 3:2
+Phone Number: +447756976114
+Message: File 42 of 144 processed - batch_benjamin_rogers_mail_3 - Time taken 2727s
+--------------------
+Date: 18/1/2025
+Time: 4:22
+Phone Number: +447756976114
+Message: File 43 of 144 processed - batch_benjamin_rogers_mail_4 - Time taken 4755s
+--------------------
+Date: 18/1/2025
+Time: 4:50
+Phone Number: +447756976114
+Message: File 44 of 144 processed - batch_bill_williams_mail_2 - Time taken 1657s
+--------------------
+Date: 18/1/2025
+Time: 5:20
+Phone Number: +447756976114
+Message: File 45 of 144 processed - batch_bill_williams_mail_3 - Time taken 1824s
+--------------------
+Date: 18/1/2025
+Time: 5:40
+Phone Number: +447756976114
+Message: File 46 of 144 processed - batch_bill_williams_mail_4 - Time taken 1178s
+--------------------
+Date: 18/1/2025
+Time: 5:51
+Phone Number: +447756976114
+Message: File 47 of 144 processed - batch_cara_semperger_mail_1 - Time taken 667s
+--------------------
+Date: 18/1/2025
+Time: 6:13
+Phone Number: +447756976114
+Message: File 48 of 144 processed - batch_cara_semperger_mail_2 - Time taken 1298s
+--------------------
+Date: 18/1/2025
+Time: 6:53
+Phone Number: +447756976114
+Message: File 49 of 144 processed - batch_cara_semperger_mail_3 - Time taken 2375s
+--------------------
+Date: 18/1/2025
+Time: 7:44
+Phone Number: +447756976114
+Message: File 50 of 144 processed - batch_cara_semperger_mail_5 - Time taken 3041s
+--------------------
+Date: 18/1/2025
+Time: 9:1
+Phone Number: +447756976114
+Message: File 51 of 144 processed - batch_carol_clair_mail_1 - Time taken 4583s
+--------------------
+Date: 18/1/2025
+Time: 9:6
+Phone Number: +447756976114
+Message: File 52 of 144 processed - batch_carol_clair_mail_3 - Time taken 273s
+--------------------
+Date: 18/1/2025
+Time: 9:29
+Phone Number: +447756976114
+Message: File 53 of 144 processed - batch_carol_clair_mail_4 - Time taken 1384s
+--------------------
+Date: 18/1/2025
+Time: 9:50
+Phone Number: +447756976114
+Message: File 54 of 144 processed - batch_carol_clair_mail_5 - Time taken 1257s
+--------------------
+Date: 18/1/2025
+Time: 10:24
+Phone Number: +447756976114
+Message: File 55 of 144 processed - batch_chris_dorland_mail_1 - Time taken 1991s
+--------------------
+Date: 18/1/2025
+Time: 11:43
+Phone Number: +447756976114
+Message: File 56 of 144 processed - batch_chris_dorland_mail_2 - Time taken 4743s
+--------------------
+Date: 18/1/2025
+Time: 12:26
+Phone Number: +447756976114
+Message: File 57 of 144 processed - batch_chris_dorland_mail_4 - Time taken 2541s
+--------------------
+Date: 18/1/2025
+Time: 13:28
+Phone Number: +447756976114
+Message: File 58 of 144 processed - batch_chris_dorland_mail_5 - Time taken 3706s
+--------------------
+Date: 18/1/2025
+Time: 14:46
+Phone Number: +447756976114
+Message: File 59 of 144 processed - batch_cooper_richey_mail_1 - Time taken 4698s
+--------------------
+Date: 18/1/2025
+Time: 15:7
+Phone Number: +447756976114
+Message: File 60 of 144 processed - batch_cooper_richey_mail_2 - Time taken 1256s
+--------------------
+Date: 18/1/2025
+Time: 15:43
+Phone Number: +447756976114
+Message: File 61 of 144 processed - batch_cooper_richey_mail_4 - Time taken 2106s
+--------------------
+Date: 18/1/2025
+Time: 16:17
+Phone Number: +447756976114
+Message: File 62 of 144 processed - batch_d_steffes_mail_1 - Time taken 2036s
+--------------------
+Date: 18/1/2025
+Time: 17:5
+Phone Number: +447756976114
+Message: File 63 of 144 processed - batch_d_steffes_mail_2 - Time taken 2838s
+--------------------
+Date: 18/1/2025
+Time: 17:18
+Phone Number: +447756976114
+Message: File 64 of 144 processed - batch_d_steffes_mail_4 - Time taken 784s
+--------------------
+Date: 18/1/2025
+Time: 18:49
+Phone Number: +447756976114
+Message: File 65 of 144 processed - batch_d_steffes_mail_5 - Time taken 5463s
+--------------------
+Date: 18/1/2025
+Time: 19:40
+Phone Number: +447756976114
+Message: File 66 of 144 processed - batch_d_thomas_mail_1 - Time taken 3007s
+--------------------
+Date: 18/1/2025
+Time: 20:8
+Phone Number: +447756976114
+Message: File 67 of 144 processed - batch_d_thomas_mail_2 - Time taken 1678s
+--------------------
+Date: 18/1/2025
+Time: 21:40
+Phone Number: +447756976114
+Message: File 68 of 144 processed - batch_d_thomas_mail_5 - Time taken 5527s
+--------------------
+Date: 18/1/2025
+Time: 22:7
+Phone Number: +447756976114
+Message: File 69 of 144 processed - batch_dan_hyvl_mail_2 - Time taken 1585s
+--------------------
+Date: 18/1/2025
+Time: 22:37
+Phone Number: +447756976114
+Message: File 70 of 144 processed - batch_dan_hyvl_mail_3 - Time taken 1807s
+--------------------
+Date: 18/1/2025
+Time: 22:58
+Phone Number: +447756976114
+Message: File 71 of 144 processed - batch_dan_hyvl_mail_4 - Time taken 1262s
+--------------------
+Date: 18/1/2025
+Time: 23:25
+Phone Number: +447756976114
+Message: File 72 of 144 processed - batch_dana_davis_mail_2 - Time taken 1550s
+--------------------
+Date: 19/1/2025
+Time: 0:49
+Phone Number: +447756976114
+Message: File 73 of 144 processed - batch_dana_davis_mail_3 - Time taken 5069s
+--------------------
+Date: 19/1/2025
+Time: 1:38
+Phone Number: +447756976114
+Message: File 74 of 144 processed - batch_dana_davis_mail_4 - Time taken 2881s
+--------------------
+Date: 19/1/2025
+Time: 2:48
+Phone Number: +447756976114
+Message: File 75 of 144 processed - batch_daren_farmer_mail_1 - Time taken 4180s
+--------------------
+Date: 19/1/2025
+Time: 4:0
+Phone Number: +447756976114
+Message: File 76 of 144 processed - batch_daren_farmer_mail_2 - Time taken 4356s
+--------------------
+Date: 19/1/2025
+Time: 4:26
+Phone Number: +447756976114
+Message: File 77 of 144 processed - batch_daren_farmer_mail_4 - Time taken 1547s
+--------------------
+Date: 19/1/2025
+Time: 5:0
+Phone Number: +447756976114
+Message: File 78 of 144 processed - batch_daren_farmer_mail_5 - Time taken 2025s
+--------------------
+Date: 19/1/2025
+Time: 6:6
+Phone Number: +447756976114
+Message: File 79 of 144 processed - batch_darrell_schoolcraft_mail_1 - Time taken 3932s
+--------------------
+Date: 19/1/2025
+Time: 6:51
+Phone Number: +447756976114
+Message: File 80 of 144 processed - batch_darrell_schoolcraft_mail_2 - Time taken 2699s
+--------------------
+Date: 19/1/2025
+Time: 7:50
+Phone Number: +447756976114
+Message: File 81 of 144 processed - batch_darrell_schoolcraft_mail_4 - Time taken 3478s
+--------------------
+Date: 19/1/2025
+Time: 8:44
+Phone Number: +447756976114
+Message: File 82 of 144 processed - batch_darron_giron_mail_2 - Time taken 3251s
+--------------------
+Date: 19/1/2025
+Time: 9:14
+Phone Number: +447756976114
+Message: File 83 of 144 processed - batch_darron_giron_mail_3 - Time taken 1769s
+--------------------
+Date: 19/1/2025
+Time: 10:1
+Phone Number: +447756976114
+Message: File 84 of 144 processed - batch_darron_giron_mail_4 - Time taken 2799s
+--------------------
+Date: 19/1/2025
+Time: 10:23
+Phone Number: +447756976114
+Message: File 85 of 144 processed - batch_darron_giron_mail_5 - Time taken 1303s
+--------------------
+Date: 19/1/2025
+Time: 10:38
+Phone Number: +447756976114
+Message: File 86 of 144 processed - batch_david_delainey_mail_1 - Time taken 873s
+--------------------
+Date: 19/1/2025
+Time: 10:54
+Phone Number: +447756976114
+Message: File 87 of 144 processed - batch_david_delainey_mail_2 - Time taken 964s
+--------------------
+Date: 19/1/2025
+Time: 11:44
+Phone Number: +447756976114
+Message: File 88 of 144 processed - batch_david_delainey_mail_4 - Time taken 2974s
+--------------------
+Date: 19/1/2025
+Time: 12:42
+Phone Number: +447756976114
+Message: File 89 of 144 processed - batch_debra_perlingiere_mail_1 - Time taken 3491s
+--------------------
+Date: 19/1/2025
+Time: 13:46
+Phone Number: +447756976114
+Message: File 90 of 144 processed - batch_debra_perlingiere_mail_3 - Time taken 3810s
+--------------------
+Date: 19/1/2025
+Time: 15:2
+Phone Number: +447756976114
+Message: File 91 of 144 processed - batch_debra_perlingiere_mail_4 - Time taken 4578s
+--------------------
+Date: 19/1/2025
+Time: 15:48
+Phone Number: +447756976114
+Message: File 92 of 144 processed - batch_drew_fossum_mail_1 - Time taken 2697s
+--------------------
+Date: 19/1/2025
+Time: 19:28
+Phone Number: +447756976114
+Message: File 93 of 144 processed - batch_drew_fossum_mail_2 - Time taken 13190s
+--------------------
+Date: 19/1/2025
+Time: 22:27
+Phone Number: +447756976114
+Message: File 94 of 144 processed - batch_drew_fossum_mail_3 - Time taken 10758s
+--------------------
+Date: 20/1/2025
+Time: 0:11
+Phone Number: +447756976114
+Message: File 95 of 144 processed - batch_elizabeth_sager_mail_1 - Time taken 6229s
+--------------------
+Date: 20/1/2025
+Time: 0:31
+Phone Number: +447756976114
+Message: File 96 of 144 processed - batch_elizabeth_sager_mail_2 - Time taken 1133s
+--------------------
+Date: 20/1/2025
+Time: 4:27
+Phone Number: +447756976114
+Message: File 97 of 144 processed - batch_elizabeth_sager_mail_3 - Time taken 14153s
+--------------------
+Date: 20/1/2025
+Time: 4:56
+Phone Number: +447756976114
+Message: File 98 of 144 processed - batch_elizabeth_sager_mail_4 - Time taken 1735s
+--------------------
+Date: 20/1/2025
+Time: 6:3
+Phone Number: +447756976114
+Message: File 99 of 144 processed - batch_errol_mclaughlin_mail_1 - Time taken 3989s
+--------------------
+Date: 20/1/2025
+Time: 6:34
+Phone Number: +447756976114
+Message: File 100 of 144 processed - batch_errol_mclaughlin_mail_2 - Time taken 1869s
+--------------------
+Date: 20/1/2025
+Time: 6:53
+Phone Number: +447756976114
+Message: File 101 of 144 processed - batch_errol_mclaughlin_mail_4 - Time taken 1130s
+--------------------
+Date: 20/1/2025
+Time: 7:11
+Phone Number: +447756976114
+Message: File 102 of 144 processed - batch_errol_mclaughlin_mail_5 - Time taken 1054s
+--------------------
+Date: 20/1/2025
+Time: 12:45
+Phone Number: +447756976114
+Message: File 103 of 144 processed - batch_gerald_nemec_mail_1 - Time taken 20004s
+--------------------
+Date: 20/1/2025
+Time: 13:15
+Phone Number: +447756976114
+Message: File 104 of 144 processed - batch_gerald_nemec_mail_2 - Time taken 1788s
+--------------------
+Date: 21/1/2025
+Time: 8:10
+Phone Number: +447756976114
+Message: File 105 of 144 processed - batch_gerald_nemec_mail_4 - Time taken 68088s
+--------------------
+Date: 21/1/2025
+Time: 8:50
+Phone Number: +447756976114
+Message: File 106 of 144 processed - batch_gerald_nemec_mail_5 - Time taken 2428s
+--------------------
+Date: 21/1/2025
+Time: 9:28
+Phone Number: +447756976114
+Message: File 107 of 144 processed - batch_james_derrick_mail_1 - Time taken 2248s
+--------------------
+Date: 21/1/2025
+Time: 9:32
+Phone Number: +447756976114
+Message: File 108 of 144 processed - batch_james_derrick_mail_3 - Time taken 236s
+--------------------
+Date: 21/1/2025
+Time: 10:23
+Phone Number: +447756976114
+Message: File 109 of 144 processed - batch_james_derrick_mail_4 - Time taken 3020s
+--------------------
+Date: 21/1/2025
+Time: 11:6
+Phone Number: +447756976114
+Message: File 110 of 144 processed - batch_jane_tholt_mail_1 - Time taken 2580s
+--------------------
+Date: 21/1/2025
+Time: 11:49
+Phone Number: +447756976114
+Message: File 111 of 144 processed - batch_jane_tholt_mail_2 - Time taken 2568s
+--------------------
+Date: 21/1/2025
+Time: 19:1
+Phone Number: +447756976114
+Message: File 112 of 144 processed - batch_jane_tholt_mail_3 - Time taken 25894s
+--------------------
+Date: 21/1/2025
+Time: 20:3
+Phone Number: +447756976114
+Message: File 113 of 144 processed - batch_janette_elbertson_mail_1 - Time taken 3703s
+--------------------
+Date: 21/1/2025
+Time: 21:8
+Phone Number: +447756976114
+Message: File 114 of 144 processed - batch_janette_elbertson_mail_2 - Time taken 3853s
+--------------------
+Date: 21/1/2025
+Time: 22:10
+Phone Number: +447756976114
+Message: File 115 of 144 processed - batch_janette_elbertson_mail_4 - Time taken 3743s
+--------------------
+Date: 22/1/2025
+Time: 2:20
+Phone Number: +447756976114
+Message: File 116 of 144 processed - batch_jeff_dasovich_mail_1 - Time taken 14946s
+--------------------
+Date: 22/1/2025
+Time: 2:58
+Phone Number: +447756976114
+Message: File 117 of 144 processed - batch_jeff_dasovich_mail_2 - Time taken 2296s
+--------------------
+Date: 22/1/2025
+Time: 4:4
+Phone Number: +447756976114
+Message: File 118 of 144 processed - batch_jeff_dasovich_mail_3 - Time taken 3931s
+--------------------
+Date: 22/1/2025
+Time: 4:59
+Phone Number: +447756976114
+Message: File 119 of 144 processed - batch_jeff_dasovich_mail_5 - Time taken 3310s
+--------------------
+Date: 22/1/2025
+Time: 8:42
+Phone Number: +447756976114
+Message: File 120 of 144 processed - batch_jeff_skilling_mail_2 - Time taken 13320s
+--------------------
+Date: 22/1/2025
+Time: 10:8
+Phone Number: +447756976114
+Message: File 121 of 144 processed - batch_jeff_skilling_mail_3 - Time taken 5164s
+--------------------
+Date: 22/1/2025
+Time: 19:58
+Phone Number: +447756976114
+Message: File 1 of 22 processed - batch_jeff_skilling_mail_5 - Time taken 5322s
+--------------------
+Date: 22/1/2025
+Time: 21:3
+Phone Number: +447756976114
+Message: File 2 of 22 processed - batch_jeffrey_shankman_mail_2 - Time taken 3896s
+--------------------
+Date: 22/1/2025
+Time: 22:41
+Phone Number: +447756976114
+Message: File 3 of 22 processed - batch_jeffrey_shankman_mail_3 - Time taken 5865s
+--------------------
+Date: 23/1/2025
+Time: 0:21
+Phone Number: +447756976114
+Message: File 4 of 22 processed - batch_jeffrey_shankman_mail_4 - Time taken 5989s
+--------------------
+Date: 23/1/2025
+Time: 1:1
+Phone Number: +447756976114
+Message: File 5 of 22 processed - batch_jeffrey_shankman_mail_5 - Time taken 2375s
+--------------------
+Date: 23/1/2025
+Time: 1:16
+Phone Number: +447756976114
+Message: File 6 of 22 processed - batch_joannie_williamson_mail_1 - Time taken 847s
+--------------------
+Date: 23/1/2025
+Time: 1:18
+Phone Number: +447756976114
+Message: File 7 of 22 processed - batch_joannie_williamson_mail_2 - Time taken 150s
+--------------------
+Date: 23/1/2025
+Time: 1:54
+Phone Number: +447756976114
+Message: File 8 of 22 processed - batch_joannie_williamson_mail_3 - Time taken 2124s
+--------------------
+Date: 23/1/2025
+Time: 3:11
+Phone Number: +447756976114
+Message: File 9 of 22 processed - batch_john_arnold_mail_1 - Time taken 4588s
+--------------------
+Date: 23/1/2025
+Time: 3:58
+Phone Number: +447756976114
+Message: File 10 of 22 processed - batch_john_arnold_mail_3 - Time taken 2799s
+--------------------
+Date: 23/1/2025
+Time: 4:34
+Phone Number: +447756976114
+Message: File 11 of 22 processed - batch_john_arnold_mail_4 - Time taken 2198s
+--------------------
+Date: 23/1/2025
+Time: 4:53
+Phone Number: +447756976114
+Message: File 12 of 22 processed - batch_john_arnold_mail_5 - Time taken 1105s
+--------------------
+Date: 23/1/2025
+Time: 5:13
+Phone Number: +447756976114
+Message: File 13 of 22 processed - batch_k_allen_mail_1 - Time taken 1158s
+--------------------
+Date: 23/1/2025
+Time: 6:1
+Phone Number: +447756976114
+Message: File 14 of 22 processed - batch_k_allen_mail_3 - Time taken 2903s
+--------------------
+Date: 23/1/2025
+Time: 6:38
+Phone Number: +447756976114
+Message: File 15 of 22 processed - batch_k_allen_mail_4 - Time taken 2177s
+--------------------
+Date: 23/1/2025
+Time: 7:18
+Phone Number: +447756976114
+Message: File 16 of 22 processed - batch_kam_keiser_mail_1 - Time taken 2410s
+--------------------
+Date: 23/1/2025
+Time: 8:0
+Phone Number: +447756976114
+Message: File 17 of 22 processed - batch_kam_keiser_mail_2 - Time taken 2473s
+--------------------
+Date: 23/1/2025
+Time: 8:59
+Phone Number: +447756976114
+Message: File 18 of 22 processed - batch_kam_keiser_mail_3 - Time taken 3506s
+--------------------
+Date: 23/1/2025
+Time: 9:11
+Phone Number: +447756976114
+Message: File 19 of 22 processed - batch_kam_keiser_mail_5 - Time taken 753s
+--------------------
+Date: 23/1/2025
+Time: 9:54
+Phone Number: +447756976114
+Message: File 20 of 22 processed - batch_kate_symes_mail_1 - Time taken 2516s
+--------------------
+Date: 23/1/2025
+Time: 10:16
+Phone Number: +447756976114
+Message: File 21 of 22 processed - batch_kate_symes_mail_3 - Time taken 1313s
+--------------------
+Date: 23/1/2025
+Time: 10:33
+Phone Number: +447756976114
+Message: File 22 of 22 processed - batch_kate_symes_mail_4 - Time taken 999s
+--------------------
+Date: 23/1/2025
+Time: 10:33
+Phone Number: +447756976114
+Message: All files processed, time taken 57809s
+--------------------
