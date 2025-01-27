@@ -29,8 +29,11 @@ def filter_chunked_unknown(df):
         
     return result_df
 
-def chunk_rephrased(unknown, rephrased, num_impostors=10):
+def chunk_rephrased(unknown, rephrased, num_impostors=10, seed=None):
 
+    if seed is not None:
+        random.seed(seed)
+        
     # We only want to apply the algorithm on only docs we have rephrased 
     rephrased_docs = rephrased['doc_id'].unique()
     unknown = unknown[unknown['doc_id'].isin(rephrased_docs)]
@@ -92,7 +95,10 @@ def chunk_rephrased(unknown, rephrased, num_impostors=10):
 
     return result_df
 
-def chunk_single_rephrased(unknown, rephrased, num_impostors=10):
+def chunk_single_rephrased(unknown, rephrased, num_impostors=10, seed=None):
+
+    if seed is not None:
+        random.seed(seed)
         
     sentence_data = []
     doc_id = unknown['doc_id'].unique()[0]
@@ -141,7 +147,10 @@ def chunk_single_rephrased(unknown, rephrased, num_impostors=10):
 
     return result_df
 
-def chunk_single_rephrased_with_scores(unknown, rephrased, score_column, num_impostors=10):
+def chunk_single_rephrased_with_scores(unknown, rephrased, score_column, num_impostors=10, seed=None):
+
+    if seed is not None:
+        random.seed(seed)
         
     sentence_data = []
     doc_id = unknown['doc_id'].unique()[0]
@@ -212,7 +221,10 @@ def chunk_single_rephrased_with_scores(unknown, rephrased, score_column, num_imp
     return result_df
 
 
-def chunk_single_rephrased_with_scores_list(unknown, rephrased, score_column, num_impostors=10):
+def chunk_single_rephrased_with_scores_list(unknown, rephrased, score_column, num_impostors=10, seed=None):
+
+    if seed is not None:
+        random.seed(seed)
         
     sentence_data = []
     doc_id = unknown['doc_id'].unique()[0]
@@ -310,8 +322,8 @@ def main():
 
     # Pull in the unknown and rephrased docs
     try:
-        unknown = read_and_write_docs.read_jsonl_file(args.unknown_file_path)
-        rephrased = read_and_write_docs.read_jsonl_file(args.rephrased_file_path)
+        unknown = read_and_write_docs.read_jsonl(args.unknown_file_path)
+        rephrased = read_and_write_docs.read_jsonl(args.rephrased_file_path)
     except:
         unknown = pd.read_csv(args.unknown_file_path)
         rephrased = pd.read_csv(args.rephrased_file_path)
@@ -330,7 +342,7 @@ def main():
     end_chunk_time = time.time()
     print(f"Time taken to chunk rephrased data: {end_chunk_time - start_chunk_time:.2f} seconds")
 
-    read_and_write_docs.save_as_jsonl(result, args.output_file_path)
+    read_and_write_docs.write_jsonl(result, args.output_file_path)
 
     print("Rephrasing complete!")
     end_time = time.time()
