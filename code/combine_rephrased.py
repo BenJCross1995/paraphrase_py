@@ -182,7 +182,7 @@ def chunk_single_rephrased_with_scores(unknown, rephrased, score_column, num_imp
             
             # Remove duplicates by converting to a set and back to a list
             distinct_list = list(set(rephrased_list))
-
+            print(len(distinct_list))
             # Select a random sentence and add to a list
             sample_sentence = random.choice(distinct_list)
             
@@ -246,7 +246,7 @@ def chunk_single_rephrased_with_scores_list(unknown, rephrased, score_column, nu
             id_value = row['doc_id']
             chunk_id_value = row['chunk_id']
             original_sentence = row['text']
-            
+ 
             filtered_rephrased = rephrased[
                 (rephrased['doc_id'] == id_value) & 
                 (rephrased['chunk_id'] == chunk_id_value)
