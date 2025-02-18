@@ -15,3 +15,5 @@ data/guardian_chunked_rephrased_1000.jsonl
 data/blogger/unknown_paraphrased.jsonl
 my_log.log
 .ipynb_checkpoints/my_log-checkpoint.log
+code/Andrea Dataset Preprocessing/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+flash-attention/
