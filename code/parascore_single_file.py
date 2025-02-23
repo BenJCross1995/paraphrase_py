@@ -35,7 +35,7 @@ def write_jsonl(data, output_file_path):
     except Exception as e:
         logging.error(f"Error writing {output_file_path}: {e}")
 
-def process_file(input_file, output_file, model_type):
+def process_file(input_file, output_file, model_type, num_layers=None):
     """Processes a single JSONL file and saves the results."""
     
     print(f"Processing file: {input_file}")
@@ -61,7 +61,7 @@ def process_file(input_file, output_file, model_type):
     
     # Load model
     print("Initializing ParaphraseScorer...")
-    parascore_free = ParaphraseScorer(score_type='parascore_free', model_type=model_type)
+    parascore_free = ParaphraseScorer(score_type='parascore_free', model_type=model_type, num_layers=num_layers)
     print(f"{model_type} Scorer Loaded")
 
     # Process file
@@ -82,6 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--input_file", type=str, required=True, help="Absolute path to the input JSONL file.")
     parser.add_argument("--output_file", type=str, required=True, help="Absolute path to save the output JSONL file.")
     parser.add_argument("--model", type=str, required=True, help="Hugging Face model name or local model path.")
+    parser.add_argument("--num_layers", type=int, default=None, help="Number of layers to use in the model (optional, default: None).")
 
     args = parser.parse_args()
-    process_file(args.input_file, args.output_file, args.model)
+    process_file(args.input_file, args.output_file, args.model, args.num_layers)

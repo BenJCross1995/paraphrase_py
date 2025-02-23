@@ -3,16 +3,17 @@ import matplotlib.pyplot as plt
 from parascore import ParaScorer
 
 class ParaphraseScorer:
-    def __init__(self, score_type, model_type='bert-base-uncased'):
+    def __init__(self, score_type, model_type='bert-base-uncased', num_layers=None):
         self.score_type = score_type
         self.model_type = model_type
+        self.num_layers = num_layers
         self.paraScorer = None
         self.initialize_parascore()
     
     def initialize_parascore(self):
         """Initialize the ParaScorer model based on the score type"""
         if self.score_type in ['parascore', 'parascore_free']:
-            self.paraScorer = ParaScorer(lang="en", model_type=self.model_type)
+            self.paraScorer = ParaScorer(lang="en", model_type=self.model_type, num_layers=self.num_layers)
         else:
             raise ValueError(f"Score type '{self.score_type}' is not supported.")
 
