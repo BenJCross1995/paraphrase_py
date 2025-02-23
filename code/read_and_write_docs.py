@@ -7,37 +7,26 @@ import pandas as pd
 from datetime import datetime
 
 def read_jsonl(file_path):
-    """
-    Reads a JSONL file and converts it into a pandas DataFrame.
-
-    Parameters:
-    - file_path: Path to the JSON file to read.
-
-    Returns:
-    - A pandas Dataframe containing the data from the JSONL file.
-    """
-    
+    """Reads a JSONL file and converts it into a pandas DataFrame."""
     data = []
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
-            data.append(json.loads(line))
-            
-    data = pd.DataFrame(data)
-    return data
+            parsed_line = json.loads(line)
+            if isinstance(parsed_line, list) and len(parsed_line) == 1:
+                data.append(parsed_line[0])
+            else:
+                data.append(parsed_line)
+                
+    return pd.DataFrame(data)
+
 
 def write_jsonl(data, output_file_path):
-    """
-    Writes a pandas DataFrame to a JSONL file.
-
-    Parameters:
-    - data: A pandas DataFrame to save.
-    - output_file_path: Path to the output JSONL file.
-    """
-    
-    with open(output_file_path, 'w') as file:
+    """Writes a pandas DataFrame to a JSONL file."""
+    with open(output_file_path, 'w', encoding='utf-8') as file:
         for _, row in data.iterrows():
             json.dump(row.to_dict(), file)
             file.write('\n')
+
 
 def save_error_as_txt(data, folder_path):
     """
