@@ -100,7 +100,12 @@ def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int,
     Executes the generation call n times using the same inputs and returns a list of results.
     Each result contains the iteration, generated text, time taken, and tokens per second.
     """
+
+	# Record the prompt length so that we can start from the next token
+    prompt_length = inputs.shape[1]
+
     results = []
+
     for i in range(n):
         start_time = time.perf_counter()
         with torch.no_grad():
@@ -116,7 +121,8 @@ def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int,
         elapsed = end_time - start_time
         num_tokens = outputs[0].shape[-1]
         tokens_per_sec = num_tokens / elapsed if elapsed > 0 else float('inf')
-        generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        generated_text = tokenizer.decode(outputs[0][prompt_length:], skip_special_tokens=True)
+		
         results.append({
             "iteration": i + 1,
             "generated_text": generated_text,
@@ -149,13 +155,17 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    
+    print(f"Using Device: {device}")
+	
     system_prompt = args.system_prompt.strip() if args.system_prompt.strip() else default_system_prompt()
 
     # Load the input JSONL file using the external module.
     df = read_and_write_docs.read_jsonl(args.input_file)
+
     if "text" not in df.columns:
         raise ValueError("The input JSONL must have a 'text' column.")
+
+	# The dataframe is duplicated and we only want to tokenise the first row
     user_prompt = df.loc[0, "text"]
 
     tokenizer, model = load_local_model(args.model_dir, device)

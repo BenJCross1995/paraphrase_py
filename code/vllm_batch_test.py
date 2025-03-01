@@ -60,7 +60,7 @@ def main():
 
     # Initialize the LLM engine with the given model.
     llm = LLM(model=args.model_dir,
-              device="cpu",
+              device="gpu",
               enable_prefix_caching=True,
               disable_sliding_window=True,
               disable_async_output_proc=True)
