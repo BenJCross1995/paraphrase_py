@@ -44,6 +44,41 @@ Instructions:
 """
     return system_prompt
 
+def default_system_prompt():
+    system_prompt = """
+Your role is to function as an advanced paraphrasing assistant. Your task is to generate a fully paraphrased version of a given document that preserves its original meaning, tone, genre, and style, while exhibiting significantly heightened lexical diversity and structural transformation. The aim is to produce a document that reflects a broad, globally influenced language profile for authorship verification research.
+
+Guidelines:
+
+1. **Preserve Core Meaning & Intent:**  
+   - Ensure that the paraphrased text maintains the original document’s logical flow, factual accuracy, and overall message.  
+   - Retain the tone, style, and genre to match the source content precisely.
+
+2. **Maximize Lexical Diversity:**  
+   - Use an extensive range of synonyms, idiomatic expressions, and alternative phrasings to replace common expressions.  
+   - Avoid repetitive language; introduce varied vocabulary throughout the document to ensure a fresh linguistic perspective.
+
+3. **Transform Structural Elements:**  
+   - Reorganize sentences and paragraphs: invert sentence structures, vary sentence lengths, and use different clause orders.  
+   - Experiment with alternative grammatical constructions and narrative flows without compromising clarity or meaning.
+
+4. **Preserve Critical Terms & Proper Nouns:**  
+   - Do not alter technical terms, names, or key references unless explicitly instructed.  
+   - Ensure these elements remain intact to maintain the document's integrity.
+
+5. **Ensure Naturalness & Cohesion:**  
+   - Despite extensive lexical and structural changes, the paraphrased document must remain coherent, natural, and easily understandable.  
+   - Strive for a balanced output that is both distinct in language and faithful to the original content.
+
+6. **Output Format:**  
+   - Provide only the paraphrased document without any extra commentary or explanations.  
+
+Instructions:
+- Prioritize high lexical variation and significant syntactic reordering.
+- Create a paraphrase that is distinct in wording and structure from the source while fully retaining its meaning, tone, and intent.
+"""
+    return system_prompt
+    
 def load_local_model(model_dir: str, device: str):
     """
     Loads a model and its tokenizer from a local directory.
@@ -58,6 +93,17 @@ def load_local_model(model_dir: str, device: str):
     dtype = torch.float16 if device == "cuda" else torch.float32
 
     tokenizer = AutoTokenizer.from_pretrained(model_dir, local_files_only=True)
+    tokenizer.pad_token = tokenizer.eos_token
+
+    # Pull the vocabulary (a dict mapping tokens to token IDs)
+    vocab = tokenizer.get_vocab()
+    print("Vocabulary size:", len(vocab))
+
+    # Get the BOS token and its token id
+    bos_token = tokenizer.bos_token
+    bos_token_id = tokenizer.bos_token_id
+    print("BOS token:", bos_token)
+    print("BOS token id:", bos_token_id)
     
     model = AutoModelForCausalLM.from_pretrained(
         model_dir,
@@ -72,7 +118,7 @@ def load_local_model(model_dir: str, device: str):
     
     return tokenizer, model
 
-def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device, padding=True):
+def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device):
     """
     Prepares tokenized inputs and attention mask from the system and user prompts.
     """
@@ -81,7 +127,7 @@ def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device, padd
         {"role": "user", "content": user_prompt}
     ]
     input_text = tokenizer.apply_chat_template(messages, tokenize=False)
-    encoded = tokenizer(input_text, return_tensors="pt", padding=padding)
+    encoded = tokenizer(input_text, return_tensors="pt")
     inputs = encoded["input_ids"].to(device)
     attention_mask = encoded["attention_mask"].to(device)
     return inputs, attention_mask
@@ -168,12 +214,17 @@ if __name__ == "__main__":
 	# The dataframe is duplicated and we only want to tokenise the first row
     user_prompt = df.loc[0, "text"]
 
+    # Load the model and output the time taken
+    model_load_start = time.time()
     tokenizer, model = load_local_model(args.model_dir, device)
-    
+    model_load_time = round(time.time() - model_load_start, 2)
+    print(f"Model Loaded: Time Taken {model_load_time}")
+
+    # Want to limit the max new tokens to certain ratio above original text
     effective_max_tokens = compute_effective_max_tokens(user_prompt, tokenizer, args.max_new_tokens, ratio=0.2)
     print(f"Using max_new_tokens = {effective_max_tokens} based on user prompt length.")
 
-    inputs, attention_mask = prepare_inputs(system_prompt, user_prompt, tokenizer, device, padding=True)
+    inputs, attention_mask = prepare_inputs(system_prompt, user_prompt, tokenizer, device)
     
     results = batch_llm_call(
         inputs,
