@@ -1,5 +1,6 @@
 import argparse
 import time
+import math
 import os
 import torch
 import pandas as pd
@@ -87,6 +88,7 @@ def load_local_model(model_dir: str, device: str):
     appropriate torch_dtype (float16 for GPU and float32 for CPU).
     Optionally compiles the model with torch.compile on CPU for speed.
     """
+	
     if not os.path.isdir(model_dir):
         raise ValueError(f"Directory {model_dir} does not exist.")
 
@@ -95,25 +97,23 @@ def load_local_model(model_dir: str, device: str):
     tokenizer = AutoTokenizer.from_pretrained(model_dir, local_files_only=True)
     tokenizer.pad_token = tokenizer.eos_token
 
-    # Pull the vocabulary (a dict mapping tokens to token IDs)
-    vocab = tokenizer.get_vocab()
-    print("Vocabulary size:", len(vocab))
+	# Optionally use device_map for larger models (if supported)
+    load_kwargs = {
+		"low_cpu_mem_usage": True,
+        "torch_dtype": dtype,
+        "local_files_only": True
+    }
+	
+    # If using GPU, you could also try device_map="auto" if memory is a concern:
+    if device == "cuda":
+        load_kwargs["device_map"] = "auto"
 
-    # Get the BOS token and its token id
-    bos_token = tokenizer.bos_token
-    bos_token_id = tokenizer.bos_token_id
-    print("BOS token:", bos_token)
-    print("BOS token id:", bos_token_id)
-    
-    model = AutoModelForCausalLM.from_pretrained(
-        model_dir,
-        low_cpu_mem_usage=True,
-        torch_dtype=dtype,
-        local_files_only=True
-    ).to(device)
-
+	# Load local model
+    model = AutoModelForCausalLM.from_pretrained(model_dir, **load_kwargs)
+    model.to(device)
     model.eval()
-    if device == "cpu" and hasattr(torch, "compile"):
+
+    if hasattr(torch, "compile"):
         model = torch.compile(model, mode="reduce-overhead")
     
     return tokenizer, model
@@ -122,14 +122,21 @@ def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device):
     """
     Prepares tokenized inputs and attention mask from the system and user prompts.
     """
+    start_time = time.time()
+
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt}
     ]
-    input_text = tokenizer.apply_chat_template(messages, tokenize=False)
-    encoded = tokenizer(input_text, return_tensors="pt")
-    inputs = encoded["input_ids"].to(device)
-    attention_mask = encoded["attention_mask"].to(device)
+	
+    input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+    encoded = tokenizer(input_text, return_tensors="pt", padding=True, truncation=True)
+    inputs = encoded["input_ids"].to(device, non_blocking=True)
+    attention_mask = encoded["attention_mask"].to(device, non_blocking=True)
+
+    elapsed_time = time.time() - start_time
+    print(f"Time taken for prepare_inputs: {elapsed_time:.4f} seconds")
+
     return inputs, attention_mask
 
 def compute_effective_max_tokens(user_prompt: str, tokenizer, default_max: int, ratio: float = 0.2) -> int:
@@ -138,7 +145,7 @@ def compute_effective_max_tokens(user_prompt: str, tokenizer, default_max: int, 
     """
     original_length = len(tokenizer.encode(user_prompt))
     computed = int(original_length * (1 + ratio))
-    return computed if computed > 0 and computed < default_max else default_max
+    return min(default_max, computed) if computed > 0 else default_max
 
 def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int,
                    max_new_tokens: int, temperature: float, top_p: float):
@@ -178,7 +185,60 @@ def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int,
         print(f"Iteration {i+1}: {elapsed:.2f} sec, {tokens_per_sec:.2f} tokens/sec")
     return results
 
-if __name__ == "__main__":
+def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int, max_new_tokens: int,
+				   temperature: float, top_p: float, batch_size: int = None):
+    """
+    Executes the generation call n times using the same inputs and returns a list of results.
+    If batch_size is provided, the n responses are generated in batches.
+    Each result contains the iteration, generated text, time taken, and tokens per second.
+    """
+    # Record the prompt length so that we can start from the next token
+    prompt_length = inputs.shape[1]
+
+    results = []
+
+    # Use batch_size = n if not provided to generate all responses in one go
+    batch_size = batch_size or n
+    total_batches = math.ceil(n / batch_size)
+    iteration = 0
+
+    for b in range(total_batches):
+        # Create a batch by repeating the inputs and attention_mask
+        current_batch_size = min(batch_size, n - iteration)
+        batch_inputs = inputs.repeat(current_batch_size, 1)
+        batch_attention = attention_mask.repeat(current_batch_size, 1)
+
+        start_time = time.perf_counter()
+        with torch.no_grad():
+            outputs = model.generate(
+                batch_inputs,
+                attention_mask=batch_attention,
+                max_new_tokens=max_new_tokens,
+                temperature=temperature,
+                top_p=top_p,
+                do_sample=True
+            )
+        end_time = time.perf_counter()
+        elapsed = end_time - start_time
+
+        # Process each output in the batch
+        for i in range(current_batch_size):
+            num_tokens = outputs[i].shape[-1]
+            tokens_per_sec = num_tokens / elapsed if elapsed > 0 else float('inf')
+            generated_text = tokenizer.decode(outputs[i][prompt_length:], skip_special_tokens=True)
+            iteration += 1
+            result = {
+                "iteration": iteration,
+                "generated_text": generated_text,
+                "time_sec": elapsed / current_batch_size,  # approximate per-sample time
+                "tokens_per_sec": tokens_per_sec
+            }
+            results.append(result)
+            print(f"Iteration {iteration}: {result['time_sec']:.2f} sec, {tokens_per_sec:.2f} tokens/sec")
+    
+    return results
+
+def main():
     parser = argparse.ArgumentParser(
         description="Optimized LLM Inference using a local model directory and JSONL input/output."
     )
@@ -198,12 +258,19 @@ if __name__ == "__main__":
                         help="Temperature for generation.")
     parser.add_argument("--top_p", type=float, default=0.9,
                         help="Top-p (nucleus) sampling probability.")
+    parser.add_argument("--batch_size", type=int, default=None,
+                        help="Optional batch size for parallel generation. If not provided, either n is used or a safe default.")
+    parser.add_argument("--num_threads", type=int, default=None,
+						help="Optional: number of CPU threads to use for PyTorch operations.")
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using Device: {device}")
-	
-    system_prompt = args.system_prompt.strip() if args.system_prompt.strip() else default_system_prompt()
+
+    if args.num_threads is not None:
+		torch.set_num_threads(args.num_threads)
+		
+    system_prompt = args.system_prompt.strip() or default_system_prompt()
 
     # Load the input JSONL file using the external module.
     df = read_and_write_docs.read_jsonl(args.input_file)
@@ -234,7 +301,8 @@ if __name__ == "__main__":
         n=args.n,
         max_new_tokens=effective_max_tokens,
         temperature=args.temperature,
-        top_p=args.top_p
+        top_p=args.top_p,
+		batch_size=args.batch_size
     )
     
     # Replicate the original row details with each generated result.
@@ -257,3 +325,6 @@ if __name__ == "__main__":
     # Write the final output using the external module.
     read_and_write_docs.write_jsonl(output_df, args.output_file)
     print(f"Saved {len(output_df)} rows to {args.output_file}")
+
+if __name__ == "__main__":
+    main()
