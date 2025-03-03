@@ -1858,3 +1858,18 @@ Time: 10:33
 Phone Number: +447756976114
 Message: All files processed, time taken 57809s
 --------------------
+Date: 14/2/2025
+Time: 21:2
+Phone Number: +447756976114
+Message: Test message
+--------------------
+Date: 14/2/2025
+Time: 21:3
+Phone Number: +447756976114
+Message: Test message
+--------------------
+Date: 14/2/2025
+Time: 21:5
+Group ID: Python Notifications
+Message: message
+--------------------
