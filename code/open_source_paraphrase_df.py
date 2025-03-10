@@ -72,7 +72,8 @@ Guidelines:
    - Strive for a balanced output that is both distinct in language and faithful to the original content.
 
 6. **Output Format:**  
-   - Provide only the paraphrased document without any extra commentary or explanations.  
+   - Provide only the paraphrased document without any extra commentary or explanations.
+   - **DO NOT INCLUDE ANY ADDITIONAL TEXT BEFORE OR AFTER THE PARAPHRASE**
 
 Instructions:
 - Prioritize high lexical variation and significant syntactic reordering.
@@ -264,11 +265,13 @@ def main():
 						help="Optional: number of CPU threads to use for PyTorch operations.")
     args = parser.parse_args()
 
+    process_start_time = time.time()
+    
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using Device: {device}")
 
     if args.num_threads is not None:
-		torch.set_num_threads(args.num_threads)
+        torch.set_num_threads(args.num_threads)
 		
     system_prompt = args.system_prompt.strip() or default_system_prompt()
 
@@ -325,6 +328,9 @@ def main():
     # Write the final output using the external module.
     read_and_write_docs.write_jsonl(output_df, args.output_file)
     print(f"Saved {len(output_df)} rows to {args.output_file}")
+
+    process_duration = time.time() - process_start_time
+    print(f"Total time taken to process document: {process_duration}")
 
 if __name__ == "__main__":
     main()
