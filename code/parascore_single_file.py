@@ -3,6 +3,7 @@ import json
 import argparse
 import logging
 import pandas as pd
+import sys
 from scorer import ParaphraseScorer  # Ensure scorer.py is accessible
 
 # Set up logging
@@ -85,4 +86,10 @@ if __name__ == "__main__":
     parser.add_argument("--num_layers", type=int, default=None, help="Number of layers to use in the model (optional, default: None).")
 
     args = parser.parse_args()
+
+    # Check whether ParaScore file already exists and exit if it does
+    if os.path.exists(args.output_file):
+        print("File already exists")
+        sys.exit(0)
+        
     process_file(args.input_file, args.output_file, args.model, args.num_layers)
