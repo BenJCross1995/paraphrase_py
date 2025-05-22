@@ -239,6 +239,71 @@ def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int, max_new_tok
     
     return results
 
+def sequential_unique_llm_call(
+    inputs,
+    attention_mask,
+    tokenizer,
+    model,
+    n: int,
+    max_new_tokens: int,
+    temperature: float,
+    top_p: float
+):
+    """
+    Repeatedly samples from the model (one at a time) until we have `n` distinct
+    generations.  Returns a list of dicts with keys:
+      - iteration:      1-based count of unique outputs so far
+      - generated_text: the text of this new unique sample
+      - time_sec:       time taken for this single generate() call
+      - tokens_per_sec: tokens generated / time_sec
+
+    Duplicate texts are skipped (not counted toward `n`), and we keep sampling
+    until `n` unique generations have been seen.
+    """
+    # how many tokens in the prompt so we can strip them off
+    prompt_length = inputs.shape[1]
+
+    seen_texts = set()
+    results = []
+    unique_count = 0
+
+    # we assume inputs is a single prompt, i.e. batch_size==1
+    while unique_count < n:
+        start = time.perf_counter()
+        with torch.no_grad():
+            out = model.generate(
+                inputs,
+                attention_mask=attention_mask,
+                max_new_tokens=max_new_tokens,
+                temperature=temperature,
+                top_p=top_p,
+                do_sample=True
+            )
+        elapsed = time.perf_counter() - start
+
+        # strip off the prompt tokens, decode new tokens
+        gen = tokenizer.decode(out[0][prompt_length:], skip_special_tokens=True)
+
+        if gen in seen_texts:
+            continue
+
+        seen_texts.add(gen)
+        unique_count += 1
+
+        total_tokens = out[0].size(-1)
+        tps = total_tokens / elapsed if elapsed > 0 else float("inf")
+
+        result = {
+            "iteration": unique_count,
+            "generated_text": gen,
+            "time_sec": elapsed,
+            "tokens_per_sec": tps
+        }
+        results.append(result)
+        print(f"Iteration {unique_count}: {elapsed:.2f}s, {tps:.2f} tok/s")
+
+    return results
+
 def main():
     parser = argparse.ArgumentParser(
         description="Optimized LLM Inference using a local model directory and JSONL input/output."
@@ -263,6 +328,8 @@ def main():
                         help="Optional batch size for parallel generation. If not provided, either n is used or a safe default.")
     parser.add_argument("--num_threads", type=int, default=None,
 						help="Optional: number of CPU threads to use for PyTorch operations.")
+    parser.add_argument("--batch", action="store_true",
+                        help="Use batch mode (batch_llm_call) instead of sequential sampling.")
     args = parser.parse_args()
 
     process_start_time = time.time()
@@ -296,17 +363,30 @@ def main():
 
     inputs, attention_mask = prepare_inputs(system_prompt, user_prompt, tokenizer, device)
     
-    results = batch_llm_call(
-        inputs,
-        attention_mask,
-        tokenizer,
-        model,
-        n=args.n,
-        max_new_tokens=effective_max_tokens,
-        temperature=args.temperature,
-        top_p=args.top_p,
-		batch_size=args.batch_size
-    )
+    # Choose generation mode
+    if args.batch:
+        results = batch_llm_call(
+            inputs,
+            attention_mask,
+            tokenizer,
+            model,
+            n=args.n,
+            max_new_tokens=effective_max_tokens,
+            temperature=args.temperature,
+            top_p=args.top_p,
+            batch_size=args.batch_size
+        )
+    else:
+        results = sequential_unique_llm_call(
+            inputs,
+            attention_mask,
+            tokenizer,
+            model,
+            n=args.n,
+            max_new_tokens=effective_max_tokens,
+            temperature=args.temperature,
+            top_p=args.top_p
+        )
     
     # Replicate the original row details with each generated result.
     original_row = df.iloc[0].to_dict()
