@@ -4,8 +4,10 @@ import math
 import os
 import torch
 import pandas as pd
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import read_and_write_docs
+import re
+import json
 
 def default_system_prompt():
     system_prompt = """
@@ -42,10 +44,13 @@ Guidelines:
 Instructions:
 - Prioritize high lexical variation and significant syntactic reordering.
 - Create a paraphrase that is distinct in wording and structure from the source while fully retaining its meaning, tone, and intent.
+
+document:
+
 """
     return system_prompt
 
-def default_system_prompt():
+def default_system_prompt_2():
     system_prompt = """
 Your role is to function as an advanced paraphrasing assistant. Your task is to generate a fully paraphrased version of a given document that preserves its original meaning, tone, genre, and style, while exhibiting significantly heightened lexical diversity and structural transformation. The aim is to produce a document that reflects a broad, globally influenced language profile for authorship verification research.
 
@@ -130,7 +135,7 @@ def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device):
         {"role": "user", "content": user_prompt}
     ]
 	
-    input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+    input_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     encoded = tokenizer(input_text, return_tensors="pt", padding=True, truncation=True)
     inputs = encoded["input_ids"].to(device, non_blocking=True)
     attention_mask = encoded["attention_mask"].to(device, non_blocking=True)
@@ -138,7 +143,7 @@ def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device):
     elapsed_time = time.time() - start_time
     print(f"Time taken for prepare_inputs: {elapsed_time:.4f} seconds")
 
-    return inputs, attention_mask
+    return inputs, attention_mask, input_text
 
 def compute_effective_max_tokens(user_prompt: str, tokenizer, default_max: int, ratio: float = 0.2) -> int:
     """
@@ -261,7 +266,7 @@ def sequential_unique_llm_call(
     until `n` unique generations have been seen.
     """
     # how many tokens in the prompt so we can strip them off
-    prompt_length = inputs.shape[1]
+    prompt_length = int(attention_mask[0].sum().item())
 
     seen_texts = set()
     results = []
@@ -282,7 +287,7 @@ def sequential_unique_llm_call(
         elapsed = time.perf_counter() - start
 
         # strip off the prompt tokens, decode new tokens
-        gen = tokenizer.decode(out[0][prompt_length:], skip_special_tokens=True)
+        gen = tokenizer.decode(out[0][prompt_length:], skip_special_tokens=True).strip()
 
         if gen in seen_texts:
             continue
@@ -304,6 +309,87 @@ def sequential_unique_llm_call(
 
     return results
 
+def sequential_unique_pipeline_call(
+    text_gen,
+    prompt_text,
+    inputs,              # torch.Tensor [1, prompt_length]
+    attention_mask,      # torch.Tensor [1, prompt_length]
+    tokenizer,           # to re-tokenize just the generated text for TPS
+    n: int,              # how many unique samples you want
+    max_new_tokens: int,
+    temperature: float,
+    top_p: float
+):
+    """
+    Samples from text_gen._forward + postprocess until you have n distinct
+    outputs. Returns a list of dicts with keys:
+      - iteration:      1-based index
+      - generated_text: new text only (prompt dropped)
+      - time_sec:       elapsed seconds for this call
+      - tokens_per_sec: # new tokens / time_sec
+    """
+    seen = set()
+    results = []
+    count = 0
+
+    prompt_len = inputs.shape[1]
+
+    while count < n:
+        start = time.perf_counter()
+        with torch.no_grad():
+            # call the pipeline's _forward directly with your pre-tokenized inputs
+            model_outputs = text_gen._forward(
+                {
+				    "prompt_text": prompt_text,
+				     "input_ids": inputs,
+				     "attention_mask": attention_mask
+				},
+                max_new_tokens=max_new_tokens,
+                temperature=temperature,
+                top_p=top_p,
+                do_sample=True,
+                num_return_sequences=1
+            )
+
+        elapsed = time.perf_counter() - start
+        print(model_outputs)
+        # model_out.sequences is [1, prompt_len + gen_len], on cuda
+        seq = model_outputs['generated_sequence'][0, 0]
+        new_ids = seq[prompt_len:]
+
+        gen = tokenizer.decode(new_ids, skip_special_tokens=True).strip()
+
+        if gen in seen:
+            continue
+
+        # count how many tokens *this* snippet is
+        tps = new_ids.size(0) / elapsed if elapsed > 0 else float("inf")
+
+        count += 1
+        seen.add(gen)
+        results.append({
+            "iteration":    count,
+            "generated_text": gen,
+            "time_sec":     elapsed,
+            "tokens_per_sec": tps
+        })
+        print(f"Iteration {count}: {elapsed:.2f}s, {tps:.2f} tok/s")
+
+    return results
+
+def clean_markdown(raw: str) -> str:
+    clean = raw.strip()
+    clean = re.sub(r"^```(?:json)?\s*\n?", "", clean)
+    clean = re.sub(r"\n?```$", "", clean).strip()
+
+    try:
+        data = json.loads(clean)
+    except json.JSONDecodeError as e:
+        # if parsing fails, fall back to returning the raw cleaned string
+        return clean
+
+    return data.get("new_document", clean)
+	
 def main():
     parser = argparse.ArgumentParser(
         description="Optimized LLM Inference using a local model directory and JSONL input/output."
@@ -334,7 +420,13 @@ def main():
 
     process_start_time = time.time()
     
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device="cuda"
+        hf_device=0
+    else:
+        device="cpu"
+        hf_device=-1
+		
     print(f"Using Device: {device}")
 
     if args.num_threads is not None:
@@ -361,8 +453,12 @@ def main():
     effective_max_tokens = compute_effective_max_tokens(user_prompt, tokenizer, args.max_new_tokens, ratio=0.2)
     print(f"Using max_new_tokens = {effective_max_tokens} based on user prompt length.")
 
-    inputs, attention_mask = prepare_inputs(system_prompt, user_prompt, tokenizer, device)
-    
+    inputs, attention_mask, input_text = prepare_inputs(system_prompt, user_prompt, tokenizer, device)
+	
+    # NOTE - Pipeline from HF code, appears to be much slower
+    # hf_pipeline = pipeline("text-generation", model=args.model_dir, return_full_text=False, device=hf_device)
+    # print("HuggingFace Pipeline Generated")
+	
     # Choose generation mode
     if args.batch:
         results = batch_llm_call(
@@ -387,14 +483,28 @@ def main():
             temperature=args.temperature,
             top_p=args.top_p
         )
-    
+  #       results = sequential_unique_pipeline_call(
+  #            hf_pipeline,
+  # 	       input_text,
+  #            inputs,
+  #            attention_mask,
+  #            tokenizer,
+  #            n=args.n,
+  #            max_new_tokens=effective_max_tokens,
+  #            temperature=args.temperature,
+  #            top_p=args.top_p
+  #       )
+	
     # Replicate the original row details with each generated result.
     original_row = df.iloc[0].to_dict()
     expanded_rows = []
     for res in results:
         row = original_row.copy()
+
+        gen = res["generated_text"]
+		
         row.update({
-            "generated_text": res["generated_text"],
+            "generated_text": clean_markdown(gen),
             "time_sec": res["time_sec"],
             "tokens_per_sec": res["tokens_per_sec"]
         })
