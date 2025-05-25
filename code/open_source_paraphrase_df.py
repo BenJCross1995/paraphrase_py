@@ -506,10 +506,8 @@ def main():
     for res in results:
         row = original_row.copy()
 
-        gen = res["generated_text"]
-		
         row.update({
-            "generated_text": gen,
+            "generated_text": res["generated_text"],
             "time_sec": res["time_sec"],
             "tokens_per_sec": res["tokens_per_sec"]
         })
