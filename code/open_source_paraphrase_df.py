@@ -509,7 +509,7 @@ def main():
         gen = res["generated_text"]
 		
         row.update({
-            "generated_text": clean_markdown(gen),
+            "generated_text": gen,
             "time_sec": res["time_sec"],
             "tokens_per_sec": res["tokens_per_sec"]
         })
