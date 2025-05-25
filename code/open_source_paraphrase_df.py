@@ -418,6 +418,11 @@ def main():
                         help="Use batch mode (batch_llm_call) instead of sequential sampling.")
     args = parser.parse_args()
 
+    # If the file exists then exit before compiling any code.
+    if os.path.exists(args.output_file):
+        print(f"Output file '{args.output_file}' already exists, quitting.")
+        sys.exit(0)
+        
     process_start_time = time.time()
     
     if torch.cuda.is_available():
