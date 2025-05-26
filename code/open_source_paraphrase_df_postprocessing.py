@@ -23,47 +23,115 @@ def clean_markdown(raw: str) -> tuple:
 
     return data.get("new_document", clean)
 
+def check_no_json(raw: str) -> tuple:
+    """
+    Detect plain text lacking the 'new_document' key and JSON structure.
+    Strips markdown fences before checking. If the cleaned text does not
+    contain the literal '"new_document"' and also lacks a JSON-like key:value
+    pattern inside braces/brackets, returns (raw, None) to mark as plaintext.
+    Otherwise returns (None, None) to continue parsing.
+    """
+    # Strip markdown code fences
+    clean = raw.strip()
+    clean = re.sub(r"^```(?:json)?\s*\n?", "", clean)
+    clean = re.sub(r"\n?```$", "", clean).strip()
+
+    # If it explicitly contains the new_document key, treat as JSON
+    if '"new_document"' in clean:
+        return None, None
+
+    # Otherwise, if there's no {…:…} or […:…] pattern, treat as plaintext
+    if not re.search(r"[{\[](?:[^:\[\]{}]*:[^\[\]{}]*)[}\]]", clean, re.DOTALL):
+        return raw, None
+
+    # Otherwise, fall through to the JSON parsing chain
+    return None, None
+
+def fix_trailing_commas(raw: str) -> tuple:
+    """
+    Remove trailing commas before closing braces/brackets to make JSON valid.
+    Returns (parsed_data, None) or (None, error_message).
+    """
+    fixed = re.sub(r",\s*([}\]])", r"\1", raw)
+    try:
+        data = json.loads(fixed)
+        return data, None
+    except json.JSONDecodeError as e:
+        return None, str(e)
+
+def extract_new_document(raw: str) -> tuple:
+    """
+    Fallback: manually extract all quoted string segments and
+    stitch them into one 'new_document' value.
+    """
+    clean = raw.strip()
+    clean = re.sub(r"^```(?:json)?\s*\n?", "", clean)
+    clean = re.sub(r"\n?```$", "", clean).strip()
+
+    # find all double-quoted substrings
+    parts = re.findall(r'"((?:\\.|[^"\\])*)"', clean)
+    if parts:
+        # skip the first part if it's the key name
+        text_parts = parts[1::2] if parts and parts[0] == 'new_document' else parts
+        combined = "\n\n".join(text_parts)
+        return combined, None
+    return None, "no quoted segments found"
+
 def process_records(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Take in a DataFrame with a 'generated_text' column,
-    apply cleaning functions in sequence, and return
-    a new DataFrame enriched with clean_text, text_cleaned,
-    clean_stage, and parsing_errors columns.
+    Process 'generated_text' through a chain of cleaners.
+    Returns DataFrame with clean_text, text_cleaned, clean_stage, parsing_errors.
     """
     funcs = [
+        ("check_no_json", check_no_json),
         ("clean_markdown", clean_markdown),
+        ("extract_new_document", extract_new_document),
+        ("fix_trailing_commas", fix_trailing_commas),
     ]
 
-    records = []
-    for record in df.to_dict(orient='records'):
-        gen = record.get("generated_text", "")
+    output = []
+    for rec in df.to_dict(orient='records'):
+        raw = rec.get('generated_text', '')
+        if rec.get('already_clean', False):
+            rec.update({
+                'clean_text': raw,
+                'text_cleaned': 1,
+                'clean_stage': 'already_clean',
+                'parsing_errors': []
+            })
+            output.append(rec)
+            continue
+
         cleaned = None
         stage = None
         errors = []
 
-        for name, func in funcs:
-            result, err = func(gen)
+        for name, fn in funcs:
+            result, err = fn(raw)
+            if err:
+                errors.append(f"{name}: {err}")
             if result is not None:
                 cleaned = json.dumps(result, ensure_ascii=False) if isinstance(result, (dict, list)) else str(result)
                 stage = name
                 break
-            if err:
-                errors.append(f"{name}: {err}")
 
-        text_cleaned = 1 if cleaned is not None else 0
-        if not cleaned:
-            cleaned = gen
-            stage = "none"
+        # ensure text_cleaned matches stage
+        if stage and stage != 'none':
+            text_cleaned = 1
+        else:
+            cleaned = raw
+            text_cleaned = 0
+            stage = 'none'
 
-        record.update({
-            "clean_text": cleaned,
-            "text_cleaned": text_cleaned,
-            "clean_stage": stage,
-            "parsing_errors": errors,
+        rec.update({
+            'clean_text': cleaned,
+            'text_cleaned': text_cleaned,
+            'clean_stage': stage,
+            'parsing_errors': errors
         })
-        records.append(record)
+        output.append(rec)
 
-    return pd.DataFrame.from_records(records)
+    return pd.DataFrame.from_records(output)
 
 
 def main():
