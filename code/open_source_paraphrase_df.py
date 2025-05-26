@@ -8,6 +8,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 import read_and_write_docs
 import re
 import json
+import sys
 
 def default_system_prompt():
     system_prompt = """
