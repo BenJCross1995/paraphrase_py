@@ -142,6 +142,11 @@ def impostor_profile(df, file_directory, save_directory, n):
         new_df.rename(columns={'text': 'original'}, inplace=True)
         author_name = row.get('author', f"author_{idx}")
         save_path = os.path.join(save_directory, f"{author_name}.jsonl")
+        
+        if os.path.isfile(save_path):
+            print(f"⏩  Skipping {author_name} – impostor profile already exists")
+            continue
+            
         write_jsonl(new_df, save_path)
 
         print(f"Author {idx+1} out of {total_authors} complete")
