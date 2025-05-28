@@ -127,21 +127,29 @@ def print_summary(df: pd.DataFrame,
     print()
     
 def process_records(df: pd.DataFrame,
-                    fixers=FIXERS) -> pd.DataFrame:
+                    fixers=FIXERS,
+                    verbose: bool = False) -> pd.DataFrame:
     """
     After each single fix, attempt json.loads().
     Stop at the first success; otherwise keep errors.
     Adds columns: clean_text, text_cleaned, clean_stage, parsing_errors
     """
-    rows_out = []
+    rows_out: list[dict] = []
+    skipped_rows: list[int] = []  
 
-    for rec in df.to_dict(orient="records"):
+    for idx, rec in enumerate(df.to_dict(orient="records")):
         raw_text       = rec.get("generated_text", "")
         current_text   = raw_text
         parsing_errors = []
         clean_stage    = "none"
         text_cleaned   = 0
 
+        if not isinstance(raw_text, str):
+            skipped_rows.append(idx)
+            if verbose:
+                print(f"[{idx:>5}] ✘  skipped (non_string_input)")
+            continue   # do NOT append this row to rows_out
+            
         # -------------------------------------------------- 0) try untouched
         try:
             obj = json.loads(current_text)
@@ -185,6 +193,14 @@ def process_records(df: pd.DataFrame,
         })
         rows_out.append(rec)
 
+        if verbose:
+            tick = "✔︎" if clean_stage != "none" else "✘"
+            print(f"[{idx:>5}] {tick}  stage={clean_stage}")
+            
+    if verbose and skipped_rows:
+        print(f"\n␡  Skipped {len(skipped_rows)} non-string row(s). "
+              f"{skipped_rows}")
+        
     return pd.DataFrame(rows_out)
 
 
@@ -194,10 +210,12 @@ def main() -> None:
     )
     p.add_argument("--input_loc",  required=True)
     p.add_argument("--output_loc", required=True)
+    p.add_argument("--verbose",    action="store_true",
+                   help="print per-row success info")
     args = p.parse_args()
 
     df_in  = read_jsonl(args.input_loc)
-    df_out = process_records(df_in)          # ← iterative pipeline
+    df_out = process_records(df_in, verbose=args.verbose)
     write_jsonl(df_out, args.output_loc)
 
 if __name__ == "__main__":

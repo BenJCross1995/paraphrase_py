@@ -4,41 +4,25 @@ import argparse
 import logging
 import pandas as pd
 import sys
-from scorer import ParaphraseScorer  # Ensure scorer.py is accessible
+from scorer import ParaphraseScorer
+from read_and_write_docs import read_jsonl, write_jsonl
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-def read_jsonl(file_path):
-    """Reads a JSONL file and converts it into a pandas DataFrame."""
-    data = []
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            for line in file:
-                parsed_line = json.loads(line)
-                if isinstance(parsed_line, list) and len(parsed_line) == 1:
-                    data.append(parsed_line[0])
-                else:
-                    data.append(parsed_line)
-        return pd.DataFrame(data)
-    except Exception as e:
-        logging.error(f"Error reading {file_path}: {e}")
-        return pd.DataFrame()
+def process_file(input_file, output_file, model_type, num_layers=None,
+                 text_column='text', rephrased_column='paraphrased_text'):
+    """
+    Processes a single JSONL file and saves the results.
 
-def write_jsonl(data, output_file_path):
-    """Writes a pandas DataFrame to a JSONL file."""
-    try:
-        with open(output_file_path, 'w', encoding='utf-8') as file:
-            for _, row in data.iterrows():
-                json.dump(row.to_dict(), file)
-                file.write('\n')
-        logging.info(f"File saved: {output_file_path}")
-    except Exception as e:
-        logging.error(f"Error writing {output_file_path}: {e}")
-
-def process_file(input_file, output_file, model_type, num_layers=None):
-    """Processes a single JSONL file and saves the results."""
-    
+    Parameters:
+        input_file (str): Path to input JSONL.
+        output_file (str): Path for output JSONL.
+        model_type (str): Model name or path.
+        num_layers (int, optional): Number of model layers.
+        text_column (str): Column name for original text.
+        rephrased_column (str): Column name for paraphrased text.
+    """
     print(f"Processing file: {input_file}")
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
@@ -54,15 +38,21 @@ def process_file(input_file, output_file, model_type, num_layers=None):
 
     # Rename columns if necessary
     print("Renaming columns if needed...")
-    df.rename(columns={
+    rename_mapping = {
         "original_sentence": "original",
-        "text": "original",
-        "paraphrased_text": "rephrased"
-    }, inplace=True)
+        text_column: "original",
+        rephrased_column: "rephrased"
+    }
+    df.rename(columns=rename_mapping, inplace=True)
+    print(f"Columns after renaming: {list(df.columns)}")
     
     # Load model
     print("Initializing ParaphraseScorer...")
-    parascore_free = ParaphraseScorer(score_type='parascore_free', model_type=model_type, num_layers=num_layers)
+    parascore_free = ParaphraseScorer(
+        score_type='parascore_free',
+        model_type=model_type,
+        num_layers=num_layers
+    )
     print(f"{model_type} Scorer Loaded")
 
     # Process file
@@ -83,13 +73,35 @@ if __name__ == "__main__":
     parser.add_argument("--input_file", type=str, required=True, help="Absolute path to the input JSONL file.")
     parser.add_argument("--output_file", type=str, required=True, help="Absolute path to save the output JSONL file.")
     parser.add_argument("--model", type=str, required=True, help="Hugging Face model name or local model path.")
-    parser.add_argument("--num_layers", type=int, default=None, help="Number of layers to use in the model (optional, default: None).")
+    parser.add_argument(
+        "--num_layers", type=int, default=None, help="Number of layers to use in the model (optional, default: None)."
+    )
+    parser.add_argument(
+        "--text_column", type=str, default="text",
+        help="Column name for original text (default: 'text')."
+    )
+    parser.add_argument(
+        "--rephrased_column", type=str, default="paraphrased_text",
+        help="Column name for paraphrased text (default: 'paraphrased_text')."
+    )
 
     args = parser.parse_args()
 
+    # Check whether input file exists and skip if it does not
+    if not os.path.isfile(args.input_file):
+        logging.warning(f"Input file not found – skipping: {args.input_file}")
+        sys.exit(0)
+    
     # Check whether ParaScore file already exists and exit if it does
     if os.path.exists(args.output_file):
-        print("File already exists")
+        logging.info(f"Output already exists – skipping: {args.output_file}")
         sys.exit(0)
         
-    process_file(args.input_file, args.output_file, args.model, args.num_layers)
+    process_file(
+        args.input_file,
+        args.output_file,
+        args.model,
+        args.num_layers,
+        args.text_column,
+        args.rephrased_column
+    )
