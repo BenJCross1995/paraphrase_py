@@ -213,7 +213,17 @@ def main() -> None:
     p.add_argument("--verbose",    action="store_true",
                    help="print per-row success info")
     args = p.parse_args()
+    
+    if not os.path.isfile(args.input_loc):
+        print(f"Error: input file '{args.input_loc}' does not exist. Aborting.")
+        sys.exit(1)
 
+    if os.path.exists(args.output_loc):
+        print(f"Error: output file '{args.output_loc}' already exists. Aborting to avoid overwriting.")
+        sys.exit(1)
+        
+    os.makedirs(os.path.dirname(args.output_loc) or ".", exist_ok=True)
+    
     df_in  = read_jsonl(args.input_loc)
     df_out = process_records(df_in, verbose=args.verbose)
     write_jsonl(df_out, args.output_loc)
