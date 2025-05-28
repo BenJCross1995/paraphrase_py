@@ -6,6 +6,14 @@ from read_and_write_docs import read_jsonl, write_jsonl
 
 def get_top_n_impostors_parascore(input_file, output_file, num_impostors):
 
+    if not os.path.isfile(input_file):
+        print(f"Error: input file '{input_file}' does not exist. Aborting.")
+        sys.exit(1)
+
+    if os.path.exists(output_file):
+        print(f"Error: output file '{output_file}' already exists. Aborting to avoid overwriting.")
+        sys.exit(1)
+        
     print(f"Processing file: {input_file}")
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
