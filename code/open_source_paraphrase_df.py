@@ -51,39 +51,40 @@ document:
 """
     return system_prompt
 
-def default_system_prompt_2():
+def default_generation_system_prompt():
     system_prompt = """
-Your role is to function as an advanced paraphrasing assistant. Your task is to generate a fully paraphrased version of a given document that preserves its original meaning, tone, genre, and style, while exhibiting significantly heightened lexical diversity and structural transformation. The aim is to produce a document that reflects a broad, globally influenced language profile for authorship verification research.
+You are an expert re-writer. A *reference text* will be provided; study it only to understand the author’s voice, level of formality, pacing, and the information it conveys.  
+Then compose an entirely new document that:
 
-Guidelines:
+1. **Matches Style & Tone**  
+   • Mirror the register, rhythm, and genre conventions (e.g.\ academic essay, news article, casual blog).  
+   • Preserve the emotional tenor (serious, playful, persuasive, etc.).
 
-1. **Preserve Core Meaning & Intent:**  
-   - Ensure that the paraphrased text maintains the original document’s logical flow, factual accuracy, and overall message.  
-   - Retain the tone, style, and genre to match the source content precisely.
+2. **Maintains Conceptual Fidelity, Not Surface Similarity**  
+   • Convey the same core ideas, arguments, and key facts.  
+   • Feel free to reorder, reframe, condense, or expand points for natural flow.  
+   • Avoid sentence-level paraphrase; do **not** echo more than four consecutive words from the source.
 
-2. **Maximize Lexical Diversity:**  
-   - Use an extensive range of synonyms, idiomatic expressions, and alternative phrasings to replace common expressions.  
-   - Avoid repetitive language; introduce varied vocabulary throughout the document to ensure a fresh linguistic perspective.
+3. **Encourages Creative Re-expression**  
+   • Introduce fresh transitions, examples, metaphors, or analogies where helpful.  
+   • Use new phrasing rather than one-for-one synonym substitutions.
 
-3. **Transform Structural Elements:**  
-   - Reorganize sentences and paragraphs: invert sentence structures, vary sentence lengths, and use different clause orders.  
-   - Experiment with alternative grammatical constructions and narrative flows without compromising clarity or meaning.
+4. **Allows Structural Freedom**  
+   • Reorganize paragraphs, combine or split ideas, adjust headings, or deploy different rhetorical devices.  
+   • The result should read like an original piece written after performing the same research—not like a transformed clone.
 
-4. **Preserve Critical Terms & Proper Nouns:**  
-   - Do not alter technical terms, names, or key references unless explicitly instructed.  
-   - Ensure these elements remain intact to maintain the document's integrity.
+5. **Protects Critical Details**  
+   • Keep technical terms, proper nouns, data, citations, and direct quotations accurate and unaltered unless explicitly instructed.
 
-5. **Ensure Naturalness & Cohesion:**  
-   - Despite extensive lexical and structural changes, the paraphrased document must remain coherent, natural, and easily understandable.  
-   - Strive for a balanced output that is both distinct in language and faithful to the original content.
+6. **Output Format**  
+   • Return **only** the freshly written document—no commentary—in JSON:  
+     {"new_document": <your_document_here>}
 
-6. **Output Format:**  
-   - Provide only the paraphrased document without any extra commentary or explanations.
-   - **DO NOT INCLUDE ANY ADDITIONAL TEXT BEFORE OR AFTER THE PARAPHRASE**
+Instructions:  
+Work as a seasoned editor rewriting an article from scratch. Emphasize originality in wording and structure while safeguarding the source’s communicative intent.
 
-Instructions:
-- Prioritize high lexical variation and significant syntactic reordering.
-- Create a paraphrase that is distinct in wording and structure from the source while fully retaining its meaning, tone, and intent.
+reference text:
+
 """
     return system_prompt
     
@@ -309,87 +310,6 @@ def sequential_unique_llm_call(
         print(f"Iteration {unique_count}: {elapsed:.2f}s, {tps:.2f} tok/s")
 
     return results
-
-def sequential_unique_pipeline_call(
-    text_gen,
-    prompt_text,
-    inputs,              # torch.Tensor [1, prompt_length]
-    attention_mask,      # torch.Tensor [1, prompt_length]
-    tokenizer,           # to re-tokenize just the generated text for TPS
-    n: int,              # how many unique samples you want
-    max_new_tokens: int,
-    temperature: float,
-    top_p: float
-):
-    """
-    Samples from text_gen._forward + postprocess until you have n distinct
-    outputs. Returns a list of dicts with keys:
-      - iteration:      1-based index
-      - generated_text: new text only (prompt dropped)
-      - time_sec:       elapsed seconds for this call
-      - tokens_per_sec: # new tokens / time_sec
-    """
-    seen = set()
-    results = []
-    count = 0
-
-    prompt_len = inputs.shape[1]
-
-    while count < n:
-        start = time.perf_counter()
-        with torch.no_grad():
-            # call the pipeline's _forward directly with your pre-tokenized inputs
-            model_outputs = text_gen._forward(
-                {
-				    "prompt_text": prompt_text,
-				     "input_ids": inputs,
-				     "attention_mask": attention_mask
-				},
-                max_new_tokens=max_new_tokens,
-                temperature=temperature,
-                top_p=top_p,
-                do_sample=True,
-                num_return_sequences=1
-            )
-
-        elapsed = time.perf_counter() - start
-        print(model_outputs)
-        # model_out.sequences is [1, prompt_len + gen_len], on cuda
-        seq = model_outputs['generated_sequence'][0, 0]
-        new_ids = seq[prompt_len:]
-
-        gen = tokenizer.decode(new_ids, skip_special_tokens=True).strip()
-
-        if gen in seen:
-            continue
-
-        # count how many tokens *this* snippet is
-        tps = new_ids.size(0) / elapsed if elapsed > 0 else float("inf")
-
-        count += 1
-        seen.add(gen)
-        results.append({
-            "iteration":    count,
-            "generated_text": gen,
-            "time_sec":     elapsed,
-            "tokens_per_sec": tps
-        })
-        print(f"Iteration {count}: {elapsed:.2f}s, {tps:.2f} tok/s")
-
-    return results
-
-def clean_markdown(raw: str) -> str:
-    clean = raw.strip()
-    clean = re.sub(r"^```(?:json)?\s*\n?", "", clean)
-    clean = re.sub(r"\n?```$", "", clean).strip()
-
-    try:
-        data = json.loads(clean)
-    except json.JSONDecodeError as e:
-        # if parsing fails, fall back to returning the raw cleaned string
-        return clean
-
-    return data.get("new_document", clean)
 	
 def main():
     parser = argparse.ArgumentParser(
@@ -401,7 +321,7 @@ def main():
                         help="Path to the input JSONL file (with a 'text' field).")
     parser.add_argument("--output_file", type=str, required=True,
                         help="Path to save the output JSONL file.")
-    parser.add_argument("--system_prompt", type=str, default="",
+    parser.add_argument("--system_prompt_loc", type=str, default="",
                         help="System prompt for the conversation. If not provided, a default prompt is used.")
     parser.add_argument("--n", type=int, default=1,
                         help="Number of iterations to run the generation.")
@@ -417,6 +337,7 @@ def main():
 						help="Optional: number of CPU threads to use for PyTorch operations.")
     parser.add_argument("--batch", action="store_true",
                         help="Use batch mode (batch_llm_call) instead of sequential sampling.")
+    parser.add_argument("--generation_type", type=str, default="paraphrase", help="Whether to use the paraphrase or generate system prompt")
     args = parser.parse_args()
 
     # If the file exists then exit before compiling any code.
@@ -428,17 +349,20 @@ def main():
     
     if torch.cuda.is_available():
         device="cuda"
-        hf_device=0
     else:
         device="cpu"
-        hf_device=-1
 		
     print(f"Using Device: {device}")
 
     if args.num_threads is not None:
         torch.set_num_threads(args.num_threads)
 		
-    system_prompt = args.system_prompt.strip() or default_system_prompt()
+    if args.system_prompt_loc and args.system_prompt_loc.strip():
+        system_prompt_loc = args.system_prompt_loc.strip()
+		with open(r"{system_prompt_loc}", "r", encoding="utf-8") as f:
+	    system_prompt = f.read()  
+    else:
+        system_prompt = default_system_prompt()
 
     # Load the input JSONL file using the external module.
     df = read_and_write_docs.read_jsonl(args.input_file)
@@ -460,10 +384,6 @@ def main():
     print(f"Using max_new_tokens = {effective_max_tokens} based on user prompt length.")
 
     inputs, attention_mask, input_text = prepare_inputs(system_prompt, user_prompt, tokenizer, device)
-	
-    # NOTE - Pipeline from HF code, appears to be much slower
-    # hf_pipeline = pipeline("text-generation", model=args.model_dir, return_full_text=False, device=hf_device)
-    # print("HuggingFace Pipeline Generated")
 	
     # Choose generation mode
     if args.batch:
@@ -489,17 +409,6 @@ def main():
             temperature=args.temperature,
             top_p=args.top_p
         )
-  #       results = sequential_unique_pipeline_call(
-  #            hf_pipeline,
-  # 	       input_text,
-  #            inputs,
-  #            attention_mask,
-  #            tokenizer,
-  #            n=args.n,
-  #            max_new_tokens=effective_max_tokens,
-  #            temperature=args.temperature,
-  #            top_p=args.top_p
-  #       )
 	
     # Replicate the original row details with each generated result.
     original_row = df.iloc[0].to_dict()
@@ -509,6 +418,8 @@ def main():
 
         row.update({
             "generated_text": res["generated_text"],
+			"top_p": args.top_p,
+			"temperature": args.temperature,
             "time_sec": res["time_sec"],
             "tokens_per_sec": res["tokens_per_sec"]
         })
