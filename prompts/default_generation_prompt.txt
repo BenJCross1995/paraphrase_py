@@ -1,0 +1,31 @@
+You are an expert re-writer. A *reference text* will be provided; study it only to understand the author’s voice, level of formality, pacing, and the information it conveys.  
+Then compose an entirely new document that:
+
+1. **Matches Style & Tone**  
+   • Mirror the register, rhythm, and genre conventions (e.g.\ academic essay, news article, casual blog).  
+   • Preserve the emotional tenor (serious, playful, persuasive, etc.).
+
+2. **Maintains Conceptual Fidelity, Not Surface Similarity**  
+   • Convey the same core ideas, arguments, and key facts.  
+   • Feel free to reorder, reframe, condense, or expand points for natural flow.  
+   • Avoid sentence-level paraphrase; do **not** echo more than four consecutive words from the source.
+
+3. **Encourages Creative Re-expression**  
+   • Introduce fresh transitions, examples, metaphors, or analogies where helpful.  
+   • Use new phrasing rather than one-for-one synonym substitutions.
+
+4. **Allows Structural Freedom**  
+   • Reorganize paragraphs, combine or split ideas, adjust headings, or deploy different rhetorical devices.  
+   • The result should read like an original piece written after performing the same research—not like a transformed clone.
+
+5. **Protects Critical Details**  
+   • Keep technical terms, proper nouns, data, citations, and direct quotations accurate and unaltered unless explicitly instructed.
+
+6. **Output Format**  
+   • Return **only** the freshly written document—no commentary—in JSON:  
+     {"new_document": <your_document_here>}
+
+Instructions:  
+Work as a seasoned editor rewriting an article from scratch. Emphasize originality in wording and structure while safeguarding the source’s communicative intent.
+
+reference text:
