@@ -3,7 +3,7 @@ import re
 import os
 import random
 import pandas as pd
-import read_and_write_docs
+from read_and_write_docs import read_jsonl, write_jsonl
 import argparse
 
 def create_temp_doc_id(input_text):
@@ -42,7 +42,7 @@ def apply_temp_doc_id(df):
 
 def get_known_author_profile(loc):
 
-    df = read_and_write_docs.read_jsonl(loc)
+    df = read_jsonl(loc)
 
     # update doc_id
     df = apply_temp_doc_id(df)
@@ -58,6 +58,21 @@ def get_known_author_profile(loc):
     )
     
     return df_grouped
+
+def filter_authors_with_complete_files(df: pd.DataFrame, root_dir: str):
+    """
+    Split *df* into two DataFrames:
+
+    - valid_df   → every file in `compiled_files` exists under *root_dir*
+    - missing_df → at least one file is missing
+
+    Returns (valid_df, missing_df).
+    """
+    def has_all_files(file_list):
+        return all(os.path.isfile(os.path.join(root_dir, f)) for f in file_list)
+
+    mask = df['compiled_files'].apply(has_all_files)
+    return df[mask].reset_index(drop=True), df[~mask].reset_index(drop=True)
 
 def impostor_profile(df, file_directory, save_directory, n):
     """
@@ -86,7 +101,7 @@ def impostor_profile(df, file_directory, save_directory, n):
         for file_name in file_list:
             file_path = os.path.join(file_directory, file_name)
             try:
-                data_df = read_and_write_docs.read_jsonl(file_path)
+                data_df = read_jsonl(file_path)
             except Exception as e:
                 print(f"Error reading {file_path}: {e}")
                 per_file_text_samples.append([''] * n)
@@ -127,7 +142,12 @@ def impostor_profile(df, file_directory, save_directory, n):
         new_df.rename(columns={'text': 'original'}, inplace=True)
         author_name = row.get('author', f"author_{idx}")
         save_path = os.path.join(save_directory, f"{author_name}.jsonl")
-        read_and_write_docs.write_jsonl(new_df, save_path)
+        
+        if os.path.isfile(save_path):
+            print(f"⏩  Skipping {author_name} – impostor profile already exists")
+            continue
+            
+        write_jsonl(new_df, save_path)
 
         print(f"Author {idx+1} out of {total_authors} complete")
 
@@ -145,8 +165,19 @@ if __name__ == "__main__":
     if args.seed is not None:
         random.seed(args.seed)
     
-    known_df = get_known_author_profile(args.known_loc)
-    read_and_write_docs.write_jsonl(known_df, args.known_save_loc)
-    print("Known author profile saved")
+    if os.path.isfile(args.known_save_loc):
+        print(f"📄 Found existing known-author profile → {args.known_save_loc}")
+        known_df = read_jsonl(args.known_save_loc)
+    else:
+        known_df = get_known_author_profile(args.known_loc)
+        write_jsonl(known_df, args.known_save_loc)
+        print("✅ Known author profile saved to disk")
     
-    impostor_profile(known_df, args.parascore_dir, args.save_dir, args.n)
+    # Check that all of the files for each author exist, we do not want to build a half full profile etc.
+    valid_df, missing_df = filter_authors_with_complete_files(known_df, args.parascore_dir)
+    
+    if not missing_df.empty:
+        skipped = ", ".join(missing_df['author'].astype(str).unique())
+        print(f"⚠️  Skipping impostor generation for authors "
+              f"(missing parascore files): {skipped}")
+    impostor_profile(valid_df, args.parascore_dir, args.save_dir, args.n)
