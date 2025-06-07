@@ -11,7 +11,8 @@ from read_and_write_docs import read_jsonl, write_jsonl
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 def process_file(input_file, output_file, model_type, num_layers=None,
-                 text_column='text', rephrased_column='paraphrased_text'):
+                 text_column='text', rephrased_column='paraphrased_text',
+				 parascore_diversity_weight=0.05):
     """
     Processes a single JSONL file and saves the results.
 
@@ -22,6 +23,7 @@ def process_file(input_file, output_file, model_type, num_layers=None,
         num_layers (int, optional): Number of model layers.
         text_column (str): Column name for original text.
         rephrased_column (str): Column name for paraphrased text.
+		parascore_diversity_weight (float): weighting of diversity in parascore_free
     """
     print(f"Processing file: {input_file}")
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
@@ -58,7 +60,7 @@ def process_file(input_file, output_file, model_type, num_layers=None,
     # Process file
     try:
         print("Calculating scores...")
-        df_with_score = parascore_free.calculate_score(df)
+        df_with_score = parascore_free.calculate_score(df, parascore_diversity_weight)
         print("Score calculation completed.")
 
         print(f"Writing output to {output_file}...")
@@ -73,17 +75,10 @@ if __name__ == "__main__":
     parser.add_argument("--input_file", type=str, required=True, help="Absolute path to the input JSONL file.")
     parser.add_argument("--output_file", type=str, required=True, help="Absolute path to save the output JSONL file.")
     parser.add_argument("--model", type=str, required=True, help="Hugging Face model name or local model path.")
-    parser.add_argument(
-        "--num_layers", type=int, default=None, help="Number of layers to use in the model (optional, default: None)."
-    )
-    parser.add_argument(
-        "--text_column", type=str, default="text",
-        help="Column name for original text (default: 'text')."
-    )
-    parser.add_argument(
-        "--rephrased_column", type=str, default="paraphrased_text",
-        help="Column name for paraphrased text (default: 'paraphrased_text')."
-    )
+    parser.add_argument("--num_layers", type=int, default=None, help="Number of layers to use in the model (optional, default: None).")
+    parser.add_argument("--text_column", type=str, default="text",help="Column name for original text (default: 'text').")
+    parser.add_argument("--rephrased_column", type=str, default="paraphrased_text",help="Column name for paraphrased text (default: 'paraphrased_text').")
+    parser.add_argument("--parascore_diversity_weight", type=float, default=-0.05, help="The weighting of diversity in the ParaScore free function")
 
     args = parser.parse_args()
 
