@@ -1,6 +1,8 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
+import torch
 from parascore import ParaScorer
+from parascore.utils import diverse
 
 class ParaphraseScorer:
     def __init__(self, score_type, model_type='bert-base-uncased', num_layers=None):
@@ -25,20 +27,33 @@ class ParaphraseScorer:
         df['parascore'] = F1
         return df
 
-    def add_parascore_free(self, df):
+    def add_parascore_free(self, df, parascore_diversity_weight=0.05):
         """Calculate the reference-free version of ParaScore for the given DataFrame"""
         cands = df['rephrased'].tolist()
         refs = df['original'].tolist()
-        P, R, F1 = self.paraScorer.free_score(cands, refs, batch_size=16)
+
+		# The free_score function weighs sim and diversity but also incorrect
+        similarity = self.paraScorer.score(cands, refs, verbose=False, batch_size=64, return_hash=False)
+        diversity = diverse(cands, refs)
+		# Convert the diversity from a list to a tensor
+        div  = torch.tensor(diversity, device=similarity[0].device)
+		
+        P, R, F1 = [sim + parascore_diversity_weight * div for sim in similarity]
+        # P, R, F1 = self.paraScorer.free_score(cands, refs, batch_size=16)
+		
+        df['similarity_score'] = similarity[2].tolist()
+        df['diversity_score'] = diversity
+        df['diversity_weighting'] = parascore_diversity_weight
         df['parascore_free'] = F1
+		
         return df
 
-    def calculate_score(self, df):
+    def calculate_score(self, df, parascore_diversity_weight=0.05):
         """Calculate the selected score for the given DataFrame based on initialized score_type"""
         if self.score_type == 'parascore':
             return self.add_parascore(df)
         elif self.score_type == 'parascore_free':
-            return self.add_parascore_free(df)
+            return self.add_parascore_free(df, parascore_diversity_weight)
         else:
             raise ValueError(f"Score type '{self.score_type}' is not supported.")
     
