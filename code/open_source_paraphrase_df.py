@@ -359,7 +359,9 @@ def main():
 		
     if args.system_prompt_loc and args.system_prompt_loc.strip():
         system_prompt_loc = args.system_prompt_loc.strip()
-        with open(r"{system_prompt_loc}", "r", encoding="utf-8") as f:
+        
+        with open(system_prompt_loc, "r", encoding="utf-8") as f:
+
             system_prompt = f.read()  
     else:
         system_prompt = default_system_prompt()
