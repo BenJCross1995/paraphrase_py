@@ -9,10 +9,12 @@ import read_and_write_docs
 import re
 import json
 import sys
+from torch import nn
+from functools import partial
 
 def default_system_prompt():
     system_prompt = """
-Your role is to function as an advanced paraphrasing assistant. Your task is to generate a fully paraphrased version of a given document that preserves its original meaning, tone, genre, and style, while exhibiting significantly heightened lexical diversity and structural transformation. The aim is to produce a document that reflects a broad, globally influenced language profile for authorship verification research.
+    Your role is to function as an advanced paraphrasing assistant. Your task is to generate a fully paraphrased version of a given document that preserves its original meaning, tone, genre, and style, while exhibiting significantly heightened lexical diversity and structural transformation. The aim is to produce a document that reflects a broad, globally influenced language profile for authorship verification research.
 
 Guidelines:
 
@@ -53,7 +55,7 @@ document:
 
 def default_generation_system_prompt():
     system_prompt = """
-You are an expert re-writer. A *reference text* will be provided; study it only to understand the author’s voice, level of formality, pacing, and the information it conveys.  
+    You are an expert re-writer. A *reference text* will be provided; study it only to understand the author’s voice, level of formality, pacing, and the information it conveys.  
 Then compose an entirely new document that:
 
 1. **Matches Style & Tone**  
@@ -88,43 +90,74 @@ reference text:
 """
     return system_prompt
     
+
 def load_local_model(model_dir: str, device: str):
-    """
-    Loads a model and its tokenizer from a local directory.
-    
-    Uses low_cpu_mem_usage to minimize peak RAM usage and sets the
-    appropriate torch_dtype (float16 for GPU and float32 for CPU).
-    Optionally compiles the model with torch.compile on CPU for speed.
-    """
-	
     if not os.path.isdir(model_dir):
         raise ValueError(f"Directory {model_dir} does not exist.")
 
-    dtype = torch.float16 if device == "cuda" else torch.float32
+    # Make things deterministic if you really need it
+    torch.backends.cudnn.deterministic = True
 
+    # Optional: speed-up with ORT if installed
+    try:
+        from torch_ort import ort_setup
+        ort_setup()
+    except ImportError:
+        pass
+
+    # Choose dtypes
+    if device == "cpu":
+        dtype = torch.bfloat16
+    elif device.startswith("cuda"):
+        dtype = torch.float16
+    else:
+        dtype = torch.float32
+
+    # Load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_dir, local_files_only=True)
     tokenizer.pad_token = tokenizer.eos_token
 
-	# Optionally use device_map for larger models (if supported)
+    # Prepare from_pretrained kwargs
     load_kwargs = {
-		"low_cpu_mem_usage": True,
+        "low_cpu_mem_usage": True,
         "torch_dtype": dtype,
-        "local_files_only": True
+        "local_files_only": True,
+        # for CPU offloading you can still use device_map="auto"
+        "device_map": "auto" if device == "cpu" else None,
     }
-	
-    # If using GPU, you could also try device_map="auto" if memory is a concern:
-    if device == "cuda":
-        load_kwargs["device_map"] = "auto"
 
-	# Load local model
+    # Instantiate the model
     model = AutoModelForCausalLM.from_pretrained(model_dir, **load_kwargs)
+
+    # If this was a safetensors‐backed model, decompose() will unpack it
+    if hasattr(model, "decompose"):
+        model.decompose()
+
+    # Move + eval
     model.to(device)
     model.eval()
 
+    # Enable gradient checkpointing if supported
+    if hasattr(model, "gradient_checkpointing_enable"):
+        model.gradient_checkpointing_enable()
+
+    # Device‐specific extra tweaks
+    if device == "cpu":
+        # e.g. xFormers, Intel extensions, etc.
+        if hasattr(model, "optimize"):
+            model.optimize(optimization_type="speed")
+    else:  # cuda
+        model = model.half()  # ensure float16
+        if hasattr(model, "optimize_for_inference"):
+            model = model.optimize_for_inference()
+
+    # Finally, compile if available
     if hasattr(torch, "compile"):
-        model = torch.compile(model, mode="reduce-overhead")
-    
+        compile_mode = "max-autotune" if device.startswith("cuda") else "default"
+        model = torch.compile(model, mode=compile_mode)
+
     return tokenizer, model
+
 
 def prepare_inputs(system_prompt: str, user_prompt: str, tokenizer, device):
     """
@@ -242,7 +275,7 @@ def batch_llm_call(inputs, attention_mask, tokenizer, model, n: int, max_new_tok
                 "tokens_per_sec": tokens_per_sec
             }
             results.append(result)
-            print(f"Iteration {iteration}: {result['time_sec']:.2f} sec, {tokens_per_sec:.2f} tokens/sec")
+            print(f"    Iteration {iteration}: {result['time_sec']:.2f} sec, {tokens_per_sec:.2f} tokens/sec")
     
     return results
 
@@ -307,7 +340,7 @@ def sequential_unique_llm_call(
             "tokens_per_sec": tps
         }
         results.append(result)
-        print(f"    Iteration {unique_count}: {elapsed:.2f}s, {tps:.2f} tok/s")
+        print(f"Iteration {unique_count}: {elapsed:.2f}s, {tps:.2f} tok/s")
 
     return results
 	
